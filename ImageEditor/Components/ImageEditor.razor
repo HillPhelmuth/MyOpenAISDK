@@ -1,0 +1,26 @@
+﻿<h3>Image Editor</h3>
+<div class="main-grid">
+    <div>
+        <RadzenButton Click="Undo" Icon="undo"></RadzenButton>
+        <RadzenButton Click="Clear" Icon="clear"></RadzenButton>
+        <div>
+            <canvas id="image-canvas" style="height: 500px; width: 500px;"></canvas>
+        </div>
+    </div>
+    
+    <div>
+       @* Replace section with:<br/>
+        <textarea @bind="_description" placeholder="description" style="width: 400px; height:120px"></textarea>*@
+        <RadzenButton Click="GrabImage">Submit</RadzenButton>
+    </div>
+    @if (!string.IsNullOrEmpty(_image))
+    {
+        <div>
+            <img src="@_image" height="500" width="500" alt="altered Image"/>
+        </div>
+    }
+</div>
+<img @ref="_imageRef" src="@ImageSrc" height="512" width="512" hidden alt="hidden image"/>
+@code {
+
+}

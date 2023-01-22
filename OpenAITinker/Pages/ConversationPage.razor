@@ -1,0 +1,73 @@
+﻿@page "/convo"
+@using OpenAIDotNet.Models.Requests
+<h3>Completion Page</h3>
+@*<div>
+    <div>
+        <label>
+            comment/question:<br />
+            <input style="width:250px" @bind-value="input" @onkeyup="EnterSubmit" />
+            <button @onclick="Submit">Submit</button>
+        </label>
+    </div>
+    <div style="background-color: black; color:white">
+        @foreach (var bit in convoBits)
+        {
+            <p>
+                <span>@bit.User</span><br />
+                <span style="color:yellow">@bit.Response</span>
+            </p>
+        }
+    </div>
+</div>*@
+<RadzenRow>
+    <RadzenTemplateForm Data="_completionRequest" TItem="CompletionRequestModel" Submit="HandleSubmit">
+        <RadzenRow Style="width:75vw">
+            <RadzenColumn Size="8">
+                <RadzenTextArea Style="width:100%; height:30vh" @bind-Value="_completionRequest.Prompt" Placeholder="Add your prompt text here"></RadzenTextArea>
+                <div>
+                    <RadzenButton Text="Submit" BusyText="Waiting..." IsBusy="_isBusy" ButtonType="ButtonType.Submit"></RadzenButton>
+                </div>
+            </RadzenColumn>
+            <RadzenColumn Size="4">
+                <div>
+                    <RadzenLabel Text="Model"></RadzenLabel><br />
+                    <RadzenDropDown Data="_modelOptions" TextProperty="Key" ValueProperty="Value" @bind-Value="_completionRequest.Model"></RadzenDropDown>
+                </div>
+                <div>
+                    <RadzenLabel Text="Tempurature"></RadzenLabel><br />
+                    <RadzenNumeric @bind-Value="_completionRequest.Temperature" Step=".1" Min="0" Max="1"></RadzenNumeric>
+                </div>
+                <div>
+                    <RadzenLabel Text="PresencePenalty"></RadzenLabel><br />
+                    <RadzenNumeric @bind-Value="_completionRequest.PresencePenalty" Step=".1" Min="0" Max="2"></RadzenNumeric>
+                </div>
+                <div>
+                    <RadzenLabel Text="FrequencyPenalty"></RadzenLabel><br />
+                    <RadzenNumeric @bind-Value="_completionRequest.FrequencyPenalty" Step=".1" Min="0" Max="2"></RadzenNumeric>
+                </div>
+                <div>
+                    <RadzenLabel Text="Comma Seperated Stops"></RadzenLabel><br />
+                    <RadzenTextBox @bind-Value="_stopInput" Step=".1" Min="0" Max="2"></RadzenTextBox>
+                </div>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenTemplateForm>
+</RadzenRow>
+<RadzenRow>
+    <div>
+        <h3 class="text-center">Response Data</h3>
+        @if (_completionResponse != null)
+        {
+            @foreach (var choice in _completionResponse.Choices)
+            {
+                <div>Index: @choice.Index</div>
+                <div>Text: @choice.Text</div>
+                <div>Finish Reason: @choice.FinishReason</div>
+                <hr />
+            }
+        }
+    </div>
+</RadzenRow>
+@code {
+
+}

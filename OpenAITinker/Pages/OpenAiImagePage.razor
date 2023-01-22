@@ -1,0 +1,105 @@
+﻿@page "/openImage"
+@using ImageEditor.Components
+@using ImageEditor.Models
+<RadzenTabs>
+    <Tabs>
+        <RadzenTabsItem Text="Alter Images">
+            <RadzenText TextStyle="TextStyle.DisplayH4" TagName="TagName.H4">Generate an altered image</RadzenText>
+
+            <div>
+
+              
+                <RadzenTemplateForm TItem="AlterImageForm" Data="_imageForm" Submit="HandleSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary />
+
+                    <div class="input-grid">
+                        <div class="form-grid">
+                            <RadzenCard>
+                                <RadzenFileInput Name="Upload" MaxFileSize="MaxSize" Change="HandleChange" TValue="string" @bind-Value="_imageForm.FileBase64" @bind-FileName="_imageForm.ImageName"></RadzenFileInput>
+                                <RadzenRequiredValidator Component="Upload" Popup="false"></RadzenRequiredValidator>
+                            </RadzenCard>
+                            <RadzenCard>
+                                <RadzenDropDown TValue="ImageSize" Data="_imageSizes" @bind-Value="_imageForm.RequestSize" Placeholder="Generated Size"></RadzenDropDown>
+                            </RadzenCard>
+                            <RadzenCard>
+                                <RadzenTextArea Name="Description" @bind-Value="_imageForm.Description" Cols="50" Rows="10" Placeholder="Describe how you want the selected areas to be replaced"></RadzenTextArea>
+                                <RadzenRequiredValidator Component="Description" Popup="false"></RadzenRequiredValidator>
+                            </RadzenCard>
+                            <RadzenCard Style="display:flex; align-items: center; justify-items: center">
+                                <RadzenButton ButtonType="ButtonType.Submit" Text="Submit" Icon="send"></RadzenButton>
+                            </RadzenCard>
+                        </div>
+                        <div>
+                            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Remove Sections To Replace</RadzenText>
+                            @if (!string.IsNullOrEmpty(_uploadedImageSrc))
+                            {
+                                <ImageEditor ImageSrc="@_uploadedImageSrc" @bind-ImageMods="_imageForm.ImageMods"></ImageEditor>
+                            }
+
+                        </div>
+                    </div>
+                </RadzenTemplateForm>
+
+
+
+                @if (!string.IsNullOrEmpty(_modifiedImageSrc))
+                {
+                    <RadzenButton Text="Toggle Show Modified Image" Click="@(() => _showModifiedImage = !_showModifiedImage)"></RadzenButton>
+                    @if (_showModifiedImage)
+                    {
+                        <img src="@_modifiedImageSrc" width="500" height="500" alt="modified image" />
+                    }
+
+                }
+
+            </div>
+            <hr />
+
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="Generate Original">
+            <RadzenText TextStyle="TextStyle.DisplayH4" TagName="TagName.H4">Generate an original image</RadzenText>
+            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Describe what you want it to generate below</RadzenText>
+            <RadzenTextArea @bind-Value="@_imageForm.Description" Placeholder="Add Description" Cols="50" Rows="10"></RadzenTextArea><br />
+            <RadzenButton Click="CreateOriginal" Text="Generate"></RadzenButton>
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="Generate Variation">
+            <RadzenText TextStyle="TextStyle.DisplayH4" TagName="TagName.H4">Generate a variation of an image</RadzenText>
+            <RadzenText TextStyle="TextStyle.Subtitle2" TagName="TagName.H3">Upload an image and click 'Generate'</RadzenText>
+            <div class="input-grid">
+                <div>
+
+                    <RadzenCard>
+                        <RadzenText TextStyle="TextStyle.Subtitle1" TextAlign="TextAlign.Center" Text="Upload Image"></RadzenText>
+                        <RadzenFileInput TValue="string" @bind-Value="_imageForm.FileBase64" @bind-FileName="_imageForm.ImageName" Change="HandleChange"></RadzenFileInput>
+                    </RadzenCard>
+
+                </div>
+                <div>
+                    @if (!string.IsNullOrEmpty(_imageForm.FileBase64))
+                    {
+                        <img src="@_imageForm.FileBase64" width="500" height="500" alt="uploaded" />
+                        <RadzenButton Click="HandleGetAltered" Text="Generate"></RadzenButton>
+                    }
+                </div>
+            </div>
+        </RadzenTabsItem>
+    </Tabs>
+</RadzenTabs>
+@if (_isWaiting)
+{
+    <div style="width: 500px; margin-left: auto; margin-right: auto;">
+        <RadzenText TextStyle="TextStyle.DisplayH6" TextAlign="TextAlign.Center" Text="Generating Images..."></RadzenText>
+        <Spinner Color="green"></Spinner>
+    </div>
+}
+<h3 class="text-center">Generated Images</h3>
+
+<div class="generated-grid">
+    @foreach (var image in _retreivedFiles)
+    {
+        <div class="img-container">
+            <img src="@image" height="512" width="512" alt="generated image" />
+        </div>
+    }
+</div>
