@@ -13,11 +13,11 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 builder.Services.AddImageInterop();
 builder.Services.AddBlazorAceEditor();
 //From User Secrets
-//var config = builder.Configuration.GetSection("OpenAIDotNetServiceOptions");
+var config = builder.Configuration.GetSection("OpenAIDotNetServiceOptions");
 //Get your API key at https://beta.openai.com/
 builder.Services.AddOpenAIDotNet(o =>
 {
-    o.ApiKey = "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";
+    o.ApiKey = config.GetValue<string>("ApiKey");
     o.Organization = "org-vzjblyRugVShXOXHAgmIRTuQ";
 });
 await builder.Build().RunAsync();
