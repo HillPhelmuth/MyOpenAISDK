@@ -1,0 +1,35 @@
+﻿@page "/code"
+@using BlazorAceEditor
+<h3>CodePage</h3>
+<h4>(Actual code editor next on To Do list)</h4>
+<hr />
+<RadzenRow>
+    <RadzenColumn Style="height: 30rem;" Size="8">
+        <AceEditor @ref="@_aceEditor" Options="_aceEditorOptions"></AceEditor>
+    </RadzenColumn>
+    <RadzenColumn Size="4">
+        <RadzenLabel Text="Select Code Model"></RadzenLabel><br/>
+        <RadzenDropDown Data="_modelOptions" TextProperty="Key" ValueProperty="Value" @bind-Value="_selectedModel"></RadzenDropDown>
+        <RadzenButton Click="Submit" Text="Request Explanation" IsBusy="_isBusy" BusyText="Requesting Explanation..."></RadzenButton>
+    </RadzenColumn>
+</RadzenRow>
+<br />
+
+@if (!string.IsNullOrEmpty(_responseText))
+{
+    <RadzenCard Style="font-family: ui-monospace;
+                line-height: 1.2rem;
+                box-shadow: -2px 2px 5px 2px grey, -3px 3px 6px 3px green;
+                padding: .5rem; max-width: 50vw" >
+        <ul>
+            @foreach (var item in _contentItems)
+            {
+                <li>@item</li>
+            }
+        </ul>
+    </RadzenCard>
+}
+
+@code {
+
+}

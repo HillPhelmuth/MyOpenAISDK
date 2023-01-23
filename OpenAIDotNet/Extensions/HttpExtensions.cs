@@ -31,20 +31,18 @@ namespace OpenAIDotNet.Extensions
 
             var response = await httpClient.SendAsync(req, HttpCompletionOption.ResponseHeadersRead);
 
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode) yield break;
+            var responseStream = await response.Content.ReadAsStreamAsync();
+            using var reader = new StreamReader(responseStream);
+            string? line = null;
+            while ((line = await reader.ReadLineAsync()) != null)
             {
-                var responseStream = await response.Content.ReadAsStreamAsync();
-                using var reader = new StreamReader(responseStream);
-                string? line = null;
-                while ((line = await reader.ReadLineAsync()) != null)
-                {
-                    if (line.StartsWith("data: "))
-                        line = line[$"data: ".Length..];
+                if (line.StartsWith("data: "))
+                    line = line[$"data: ".Length..];
 
-                    if (string.IsNullOrWhiteSpace(line) || line == "[DONE]") continue;
-                    var t = JsonSerializer.Deserialize<TResponse>(line.Trim());
-                    yield return t;
-                }
+                if (string.IsNullOrWhiteSpace(line) || line == "[DONE]") continue;
+                var t = JsonSerializer.Deserialize<TResponse>(line.Trim());
+                yield return t;
             }
         }
     }
