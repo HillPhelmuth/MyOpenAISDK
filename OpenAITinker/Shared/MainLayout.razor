@@ -1,17 +1,28 @@
 ﻿@inherits LayoutComponentBase
 
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
-
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+    <RadzenLayout Style="height:100vh; width:100vw">
+        <RadzenHeader>
+            <RadzenSidebarToggle Click="@(() => _navMenuExpanded = !_navMenuExpanded)"></RadzenSidebarToggle>
+            <div class="text-center" style="position: absolute; top: 8px; margin-left: 40%; margin-right:40%">
+                <RadzenText Text="@PageHeader" TextStyle="TextStyle.H4" Style="color:white"></RadzenText>
+            </div>
+        </RadzenHeader>
+        <RadzenSidebar @bind-Expanded="_navMenuExpanded">
+            <div class="sidebar"> <NavMenu /></div>
+        </RadzenSidebar>
+        <RadzenBody>
+            <article class="content px-4">
+                @Body
+            </article>
+        </RadzenBody>
+    </RadzenLayout>
+    
 </div>
+@code
+{
+    [CascadingParameter(Name = "PageHeader")]
+    public string PageHeader { get; set; }
+
+    private bool _navMenuExpanded;
+}

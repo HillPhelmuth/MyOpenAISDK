@@ -64,7 +64,9 @@
         public enum Subject
         {
             Text,
-            Code
+            Code,
+            CodeEdit,
+            Edit
         }
 
         public static string Ada => "ada";
@@ -85,8 +87,9 @@
         public static string CodeDavinciV1 => GetModelName(BaseModel.Davinci, Subject.Code, "001");
         public static string CodeCushmanV1 => GetModelName(BaseModel.Cushman, Subject.Code, "001");
         public static string CodeDavinciV2 => GetModelName(BaseModel.Davinci, Subject.Code, "002");
+        public static string TextEditDavinciV1 => GetModelName(BaseModel.Davinci, Subject.Edit, "001");
+        public static string CodeEditDavinciV1 => GetModelName(BaseModel.Davinci, Subject.CodeEdit, "001");
 
-        
 
         public static string GetModelName(this BaseModel baseModel, Subject? subject = null, string? version = null)
         {
@@ -121,15 +124,17 @@
             };
         }
 
-        public static string EnumToString(this Subject subject, string baseEngine)
+        public static string EnumToString(this Subject subject, string basemodel)
         {
             return string.Format(subject switch
             {
                 //{0}-{1}
                 Subject.Text => "text-{0}",
                 Subject.Code => "code-{0}",
+                Subject.CodeEdit => "code-{0}-edit",
+                Subject.Edit => "text-{0}-edit",
                 _ => throw new ArgumentOutOfRangeException(nameof(subject), subject, null)
-            }, baseEngine);
+            }, basemodel);
         }
     }
 }

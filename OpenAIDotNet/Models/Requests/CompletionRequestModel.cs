@@ -24,7 +24,7 @@ namespace OpenAIDotNet.Models.Requests
             {
                 if (Prompt != null && PromptList != null)
                 {
-                    throw new ValidationException("Prompt and PromptList can not be assigned at the same time. One of them is should be null.");
+                    throw new ValidationException("Prompt and PromptList can not both me used! Pick one!");
                 }
                 return Prompt != null ? new List<string>() { Prompt } : PromptList;
             }

@@ -25,14 +25,13 @@ namespace OpenAIDotNet
                 httpClient.DefaultRequestHeaders.Add("OpenAI-Organization", $"{organization}");
             }
 
-            var endPoints = new Endpoints(settings.Value.Version);
-            CompletionService = new CompletionService(httpClient, endPoints);
-            ImageService = new ImageService(httpClient, endPoints);
-            if (!string.IsNullOrEmpty(settings.Value.DefaultModel))
-            {
-                CompletionService.SetDefaultModel(settings.Value.DefaultModel);
-            }
+            var version = settings.Value.Version;
+            var endPoints = new Endpoints(version);
+            var defaultModel = settings.Value.DefaultModel;
+
+            InitializeServices(httpClient, endPoints, defaultModel);
         }
+
         public OpenAIDotNetService(HttpClient httpClient, OpenAIGPTOptions settings)
         {
             Console.WriteLine("DI Container used 2nd ctor");
@@ -46,16 +45,25 @@ namespace OpenAIDotNet
             }
 
             var endPoints = new Endpoints(settings.Version);
+            var defaultModel = settings.DefaultModel;
+
+            InitializeServices(httpClient, endPoints, defaultModel);
+        }
+        private void InitializeServices(HttpClient httpClient, Endpoints endPoints, string? defaultModel)
+        {
             CompletionService = new CompletionService(httpClient, endPoints);
             ImageService = new ImageService(httpClient, endPoints);
-            if (!string.IsNullOrEmpty(settings.DefaultModel))
+            ModerationService = new ModerationService(httpClient, endPoints);
+            TextEditService = new TextEditService(httpClient, endPoints);
+            if (!string.IsNullOrEmpty(defaultModel))
             {
-                CompletionService.SetDefaultModel(settings.DefaultModel);
+                CompletionService.SetDefaultModel(defaultModel);
             }
         }
 
-        public CompletionService CompletionService { get; }
-        public ImageService ImageService { get; }
-
+        public CompletionService CompletionService { get; private set; } = default!;
+        public ImageService ImageService { get; private set; } = default!;
+        public ModerationService ModerationService { get; private set; } = default!;
+        public TextEditService TextEditService { get; private set; } = default!;
     }
 }

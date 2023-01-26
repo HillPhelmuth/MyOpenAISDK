@@ -24,15 +24,14 @@ namespace OpenAIDotNet.Services
 
         public async Task<ImageResponseModel> Create(ImageCreateRequest request)
         {
-            var url = _endPoints.ImageCreate();
-            
+            var url = _endPoints.ImageCreate;
 
             return await _httpClient.PostReadJsonAsync<ImageResponseModel>(url, request);
         }
 
         public async Task<ImageResponseModel> Edit(ImageEditRequest imageEditCreateRequest)
         {
-            var url = _endPoints.ImageEditCreate();
+            var url = _endPoints.ImageEditCreate;
             var multipartContent = new MultipartFormDataContent();
             if (imageEditCreateRequest.User != null) multipartContent.Add(new StringContent(imageEditCreateRequest.User), "user");
             if (imageEditCreateRequest.ResponseFormat != null) multipartContent.Add(new StringContent(imageEditCreateRequest.ResponseFormat), "response_format");
@@ -47,7 +46,7 @@ namespace OpenAIDotNet.Services
         public async Task<ImageResponseModel> CreateVariation(ImageEditRequest imageEditCreateRequest)
         {
             //_httpClient.DefaultRequestHeaders.Add("content-type", "multipart/form-data");
-            var url = _endPoints.ImageVariationCreate();
+            var url = _endPoints.ImageVariationCreate;
             var multipartContent = new MultipartFormDataContent();
             if (imageEditCreateRequest.User != null) multipartContent.Add(new StringContent(imageEditCreateRequest.User), "user");
             if (imageEditCreateRequest.ResponseFormat != null) multipartContent.Add(new StringContent(imageEditCreateRequest.ResponseFormat), "response_format");

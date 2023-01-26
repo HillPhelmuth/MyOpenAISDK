@@ -1,0 +1,44 @@
+﻿@page "/moderation"
+@using OpenAIDotNet.Models.Responses
+<h3>ModerationPage</h3>
+<RadzenRow>
+    <RadzenColumn Size="6">
+        <RadzenTemplateForm Data="_moderationRequestForm" TItem="ModerationRequestForm" Submit="HandleSubmit">
+            <div>
+                <RadzenCard>
+                    <RadzenText Style="margin-left:auto; margin-right:auto" TextStyle="TextStyle.Subtitle1" Text="Select a model and enter text to evaluate for OpenAIs Moderation categories"></RadzenText>
+                    <RadzenDropDown Data="ModerationModels" @bind-Value="_moderationRequestForm.SelectedModel"></RadzenDropDown>
+                    <RadzenTextArea Style="width: 100%; height: 15rem" @bind-Value="_moderationRequestForm.Input"></RadzenTextArea><br />
+                    <RadzenButton ButtonType="ButtonType.Submit" Text="Evaluate" BusyText="Evaluating..." IsBusy="_isBusy"></RadzenButton>
+                </RadzenCard>
+            </div>
+        </RadzenTemplateForm>
+    </RadzenColumn>
+    <RadzenColumn Size="4">
+        @foreach (var result in _responseModel?.Results ?? new List<Result>())
+        {
+            var flagStyle = result.Flagged ? "color: red" : "color: green";
+            <RadzenCard>
+                <div class="text-center" style="@(flagStyle)">
+                    Flagged: @result.Flagged
+                </div>
+                <div>
+                    @foreach (var score in _resultScores)
+                    {
+                        var color = score.Value.IsFlagged ? "color: white; background-color: red" : "color:black; background-color:lightgreen";
+                        <RadzenCard Style=@($"display:grid; grid-template-columns: 1fr 1fr; grid-column-gap: 2rem; {color}")>
+                           
+                            <div class="text-center" style="font-size: 110%; font-weight: bold">
+                                @score.Key
+                            </div>
+                            <div class="text-center">
+                                @score.Value.Score.ToString("F4")
+                            </div>
+                        </RadzenCard>
+                    }
+                </div>
+            </RadzenCard>
+        }
+        
+    </RadzenColumn>
+</RadzenRow>

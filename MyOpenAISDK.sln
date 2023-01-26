@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAITinker", "OpenAITinke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageEditor", "ImageEditor\ImageEditor.csproj", "{CB4B45FA-911E-46D5-A9B9-231EC5E82004}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAceEditor", "BlazorAceEditor\BlazorAceEditor.csproj", "{E97679FB-F43E-411B-9FFF-E1D88E8AE1D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{CB4B45FA-911E-46D5-A9B9-231EC5E82004}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB4B45FA-911E-46D5-A9B9-231EC5E82004}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB4B45FA-911E-46D5-A9B9-231EC5E82004}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E97679FB-F43E-411B-9FFF-E1D88E8AE1D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E97679FB-F43E-411B-9FFF-E1D88E8AE1D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E97679FB-F43E-411B-9FFF-E1D88E8AE1D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E97679FB-F43E-411B-9FFF-E1D88E8AE1D0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
