@@ -10,7 +10,8 @@ namespace BlazorAceEditor.Models
 {
     public class AceRenderOptions : AceSessionOptions
     {
-        
+        private string? _theme;
+
         [JsonPropertyName("hScrollBarAlwaysVisible")]
         public bool? HScrollBarAlwaysVisible { get; set; }
 
@@ -69,6 +70,10 @@ namespace BlazorAceEditor.Models
         public bool? FixedWidthGutter { get; set; }
 
         [JsonPropertyName("theme")]
-        public string? Theme { get; set; }
+        public string? Theme
+        {
+            get => _theme;
+            set => _theme = value?.StartsWith("ace/theme/") == true ? value : $"ace/theme/{value}";
+        }
     }
 }

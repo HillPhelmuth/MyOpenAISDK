@@ -9,13 +9,15 @@ namespace BlazorAceEditor.Models
 {
     public class AceSessionOptions
     {
+        private string? _mode;
+
         [JsonPropertyName("firstLineNumber")]
         public int? FirstLineNumber { get; set; }
 
         [JsonPropertyName("overwrite")]
         public bool? Overwrite { get; set; }
 
-        [JsonPropertyName("newLineMode")] 
+        [JsonPropertyName("newLineMode")]
         public string? NewLineMode => Enum.GetName(NewLineModeOption)?.ToLower();
         [JsonIgnore]
         public NewLineModeOption NewLineModeOption { get; set; }
@@ -38,7 +40,11 @@ namespace BlazorAceEditor.Models
         public FoldStyleOption FoldStyleOption { get; set; }
 
         [JsonPropertyName("mode")]
-        public string? Mode { get; set; }
+        public string? Mode
+        {
+            get => _mode;
+            set => _mode = value?.StartsWith("ace/mode/") == true ? value : $"ace/mode/{value}";
+        }
     }
 
     public enum NewLineModeOption

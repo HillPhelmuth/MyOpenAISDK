@@ -22,13 +22,7 @@ namespace BlazorAceEditor
                 "import", "./_content/BlazorAceEditor/aceEditorInterop.js").AsTask());
         }
 
-        public async ValueTask<string> Prompt(string message)
-        {
-            var module = await moduleTask.Value;
-            return await module.InvokeAsync<string>("showPrompt", message);
-        }
-
-        public async ValueTask Init(string elementId, AceEditorOptions options)
+        public async ValueTask<bool> Init(string elementId, AceEditorOptions options)
         {
             //convert to JsonElement to remove all null properties from object
             var optionsJson = JsonSerializer.Serialize(options, new JsonSerializerOptions
@@ -38,7 +32,7 @@ namespace BlazorAceEditor
             Console.WriteLine($"Options as Json:\n{optionsJson}");
             var optionsDict = JsonSerializer.Deserialize<JsonElement>(optionsJson);
             var module = await moduleTask.Value;
-            await module.InvokeVoidAsync("init", elementId, optionsDict);
+            return await module.InvokeAsync<bool>("init", elementId, optionsDict);
         }
 
         public async ValueTask<string> GetValue()
@@ -50,7 +44,19 @@ namespace BlazorAceEditor
         {
             await (await moduleTask.Value).InvokeVoidAsync("setValue", value);
         }
+        public async ValueTask SetLanguage(string language)
+        {
+            await (await moduleTask.Value).InvokeVoidAsync("setLanguage", language);
+        }
+        public async ValueTask SetTheme(string theme)
+        {
+            await (await moduleTask.Value).InvokeVoidAsync("setTheme", theme);
+        }
 
+        public async ValueTask<List<ThemeModel>> GetThemes(bool excludeDark = false)
+        {
+            return await (await moduleTask.Value).InvokeAsync<List<ThemeModel>>("availableThemes");
+        }
         //public async ValueTask Insert(string text)
         //{
 

@@ -1,0 +1,41 @@
+﻿@page "/edit"
+<h3 class="text-center">Edit Page</h3>
+<RadzenRow>
+    <RadzenTemplateForm Data="_editRequestForm" TItem="EditRequestForm" Submit="HandleSubmit">
+        <RadzenRow Style="width:75vw">
+            <RadzenColumn Size="6">
+                <div>
+                    <RadzenLabel Text="Input"></RadzenLabel>
+                    <RadzenTextArea @bind-Value="_editRequestForm.Input" Style="width: 100%; height: 10rem;"></RadzenTextArea>
+                </div>
+                <div>
+                    <RadzenLabel Text="Instruction"></RadzenLabel>
+                    <RadzenTextArea @bind-Value="_editRequestForm.Instruction" Style="width: 100%; height: 12rem;"></RadzenTextArea>
+                </div>
+
+            </RadzenColumn>
+            <RadzenColumn Size="3">
+                <RadzenButton ButtonType="ButtonType.Submit" IsBusy="_isBusy" Text="Request Edit" BusyText="Requsting Edits..."></RadzenButton>
+            </RadzenColumn>
+        </RadzenRow>
+    </RadzenTemplateForm>
+</RadzenRow>
+<RadzenRow>
+    <div>
+        <h3 class="text-center">Response Data</h3>
+        @if (_editResponse != null)
+        {
+            @foreach (var choice in _editResponse.Choices)
+            {
+                <RadzenCard>
+                    <div>Index: @choice.Index</div>
+                    <div>Text: @choice.Text</div>
+                    <div>Finish Reason: @choice.FinishReason</div>
+                </RadzenCard>
+            }
+        }
+    </div>
+</RadzenRow>
+@code {
+
+}

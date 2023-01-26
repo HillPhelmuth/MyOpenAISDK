@@ -15,18 +15,18 @@
 
                     <div class="input-grid">
                         <div class="form-grid">
-                            <RadzenCard>
+                            <RadzenCard Style="grid-area:mid">
                                 <RadzenFileInput Name="Upload" MaxFileSize="MaxSize" Change="HandleChange" TValue="string" @bind-Value="_imageForm.FileBase64" @bind-FileName="_imageForm.ImageName"></RadzenFileInput>
                                 <RadzenRequiredValidator Component="Upload" Popup="false"></RadzenRequiredValidator>
                             </RadzenCard>
-                            <RadzenCard>
+                            <RadzenCard Style="grid-area:sm">
                                 <RadzenDropDown TValue="ImageSize" Data="_imageSizes" @bind-Value="_imageForm.RequestSize" Placeholder="Generated Size"></RadzenDropDown>
                             </RadzenCard>
-                            <RadzenCard>
-                                <RadzenTextArea Name="Description" @bind-Value="_imageForm.Description" Cols="50" Rows="10" Placeholder="Describe how you want the selected areas to be replaced"></RadzenTextArea>
+                            <RadzenCard Style="grid-area:lrg">
+                                <RadzenTextArea Name="Description" @bind-Value="_imageForm.Description" Style="width:100%" Rows="10" Placeholder="Describe how you want the selected areas to be replaced"></RadzenTextArea>
                                 <RadzenRequiredValidator Component="Description" Popup="false"></RadzenRequiredValidator>
                             </RadzenCard>
-                            <RadzenCard Style="display:flex; align-items: center; justify-items: center">
+                            <RadzenCard Style="grid-area: btn">
                                 <RadzenButton ButtonType="ButtonType.Submit" Text="Submit" Icon="send"></RadzenButton>
                             </RadzenCard>
                         </div>

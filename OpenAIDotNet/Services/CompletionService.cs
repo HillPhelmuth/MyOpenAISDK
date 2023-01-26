@@ -25,7 +25,7 @@ namespace OpenAIDotNet.Services
         public async Task<CompletionResponseModel> Create(CompletionRequestModel request)
         {
             request.Model ??= _defaultModel;
-            var url = _endPoints.Completion();
+            var url = _endPoints.Completion;
             return await _httpClient.PostReadJsonAsync<CompletionResponseModel>(url, request);
         }
 
@@ -47,7 +47,7 @@ namespace OpenAIDotNet.Services
         {
             request.Model ??= _defaultModel;
             request.Stream ??= true;
-            var url = _endPoints.Completion();
+            var url = _endPoints.Completion;
             return _httpClient.PostReadJsonStream<CompletionResponseModel>(url, request);
         }
 

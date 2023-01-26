@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/OpenAITinker/wwwroot/appsettings.json
+/OpenAITinker/Properties/ServiceDependencies/OpenAISDKSample - Web Deploy/profile.arm.json

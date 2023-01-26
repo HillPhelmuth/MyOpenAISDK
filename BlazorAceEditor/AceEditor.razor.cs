@@ -16,6 +16,8 @@ namespace BlazorAceEditor
         public AceEditorOptions Options { get; set; } = default!;
         [Parameter]
         public string? Style { get; set; }
+        [Parameter]
+        public EventCallback<AceEditor> OnEditorInit { get; set; }
 
         [Inject] private AceEditorJsInterop AceEditorInterop { get; set; } = default!;
 
@@ -30,7 +32,12 @@ namespace BlazorAceEditor
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            await AceEditorInterop.Init(Id, Options);
+            if (firstRender)
+            {
+                var didInit = await AceEditorInterop.Init(Id, Options);
+                if (didInit)
+                    await OnEditorInit.InvokeAsync(this);
+            }
             await base.OnAfterRenderAsync(firstRender);
         }
 
@@ -42,6 +49,16 @@ namespace BlazorAceEditor
         public async Task SetValue(string text)
         {
             await AceEditorInterop.SetValue(text);
+        }
+
+        public async Task ChangeLanguage(string language)
+        {
+            await AceEditorInterop.SetLanguage(language);
+        }
+
+        public async Task ChangeTheme(string theme)
+        {
+            await AceEditorInterop.SetTheme(theme);
         }
     }
 }

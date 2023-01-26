@@ -14,28 +14,16 @@ namespace OpenAIDotNet.Models
         {
             _apiVersion = apiVersion;
         }
-        public string CompletionCreate(string engineId)
-        {
-            return $"/{_apiVersion}/engines/{engineId}/completions";
-        }
+        
+        public string Completion => $"/{_apiVersion}/completions";
+        public string ImageCreate => $"/{_apiVersion}/images/generations";
 
-        public string Completion()
-        {
-            return $"/{_apiVersion}/completions";
-        }
-        public string ImageCreate()
-        {
-            return $"/{_apiVersion}/images/generations";
-        }
+        public string ImageEditCreate => $"/{_apiVersion}/images/edits";
 
-        public string ImageEditCreate()
-        {
-            return $"/{_apiVersion}/images/edits";
-        }
+        public string ImageVariationCreate => $"/{_apiVersion}/images/variations";
 
-        public string ImageVariationCreate()
-        {
-            return $"/{_apiVersion}/images/variations";
-        }
+        public string Moderation => $"/{_apiVersion}/moderations";
+
+        public string TextEdit => $"/{_apiVersion}/edits";
     }
 }

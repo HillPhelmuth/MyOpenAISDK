@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAITinker", "OpenAITinke
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageEditor", "ImageEditor\ImageEditor.csproj", "{CB4B45FA-911E-46D5-A9B9-231EC5E82004}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorAceEditor", "BlazorAceEditor\BlazorAceEditor.csproj", "{E97679FB-F43E-411B-9FFF-E1D88E8AE1D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAceEditor", "BlazorAceEditor\BlazorAceEditor.csproj", "{E97679FB-F43E-411B-9FFF-E1D88E8AE1D0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
