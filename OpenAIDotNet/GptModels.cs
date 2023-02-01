@@ -89,6 +89,7 @@
         public static string CodeDavinciV2 => GetModelName(BaseModel.Davinci, Subject.Code, "002");
         public static string TextEditDavinciV1 => GetModelName(BaseModel.Davinci, Subject.Edit, "001");
         public static string CodeEditDavinciV1 => GetModelName(BaseModel.Davinci, Subject.CodeEdit, "001");
+        public static string EmbedAdaV2 => "text-embedding-ada-002";
 
 
         public static string GetModelName(this BaseModel baseModel, Subject? subject = null, string? version = null)

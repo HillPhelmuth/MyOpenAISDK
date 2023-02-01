@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /OpenAITinker/wwwroot/appsettings.json
 /OpenAITinker/Properties/ServiceDependencies/OpenAISDKSample - Web Deploy/profile.arm.json
+/OpenAITinker/wwwroot/appsettings.development.json
