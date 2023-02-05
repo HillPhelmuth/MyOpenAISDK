@@ -24,9 +24,7 @@ namespace OpenAIDotNet
             {
                 httpClient.DefaultRequestHeaders.Add("OpenAI-Organization", $"{organization}");
             }
-
-            var version = settings.Value.Version;
-            //var endPoints = new Endpoints(version);
+            
             var defaultModel = settings.Value.DefaultModel;
 
             InitializeServices(httpClient, defaultModel);
@@ -43,8 +41,6 @@ namespace OpenAIDotNet
             {
                 httpClient.DefaultRequestHeaders.Add("OpenAI-Organization", $"{organization}");
             }
-
-            //var endPoints = new Endpoints(settings.Version);
             var defaultModel = settings.DefaultModel;
 
             InitializeServices(httpClient, defaultModel);

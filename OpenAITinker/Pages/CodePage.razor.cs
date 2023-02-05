@@ -14,13 +14,14 @@ namespace OpenAITinker.Pages
         private string? _codeText;
         private string? _responseText;
         private AceEditor? _aceEditor;
+        private AceEditor? _aceEditor2;
         private List<string> _contentItems = new();
         private bool _isBusy;
         private readonly AceEditorOptions _aceEditorOptions = new()
         {
             Mode = "csharp",
             VScrollBarAlwaysVisible = true,
-            Theme = "twilight"
+            Theme = "gob"
 
         };
 
@@ -33,41 +34,49 @@ namespace OpenAITinker.Pages
         private Dictionary<string, string> _languageModes = new();
         private List<ThemeModel> _themes = new();
         private string _selectedLanguage = "c#";
-        
-        //protected override Task OnInitializedAsync()
-        //{
-        //    var files = Directory.EnumerateFiles("_content/BlazorAceEditor/lib/ace", "*.js",
-        //        SearchOption.TopDirectoryOnly);
-        //    _languageModes = files.Where(x => Path.GetFileNameWithoutExtension(x).StartsWith("mode-")).Select(x => Path.GetFileNameWithoutExtension(x).Replace("mode-", "")).ToList();
-        //    _themes = files.Where(x => Path.GetFileNameWithoutExtension(x).StartsWith("theme-")).Select(x => Path.GetFileNameWithoutExtension(x).Replace("theme-", "")).ToList();
-        //    return base.OnInitializedAsync();
-        //}
 
+        private int _tabIndex;
+        
         private async Task HandleInit(AceEditor aceEditor)
         {
-            await _aceEditor!.SetValue(Snippets.Shuffle);
+            var code = _tabIndex switch
+            {
+                0 => Snippets.Shuffle,
+                1 => Snippets.RequestGenerate
+            };
+            await _aceEditor!.SetValue(code);
             
             _languageModes = new Dictionary<string, string>() {{"C++","c_cpp"},{"C#","csharp"}, {"Java","java"} };
             _themes = await AceEditorJsInterop.GetThemes();
             StateHasChanged();
         }
 
-        private async Task HandleLanguageChange(string language)
+        private async Task HandleLanguageChange(string language, AceEditor editor)
         {
-            await _aceEditor!.ChangeLanguage(language);
+            await editor!.ChangeLanguage(language);
         }
 
-        private async Task HandleThemeChange(ThemeModel theme)
+        private async Task HandleThemeChange(ThemeModel theme, AceEditor editor)
         {
-            await _aceEditor!.ChangeTheme(theme.Name);
+            await editor!.ChangeTheme(theme.Name);
         }
+
         private async Task Submit()
+        {
+            var codeTask = _tabIndex switch
+            {
+                0 => Submit(_aceEditor),
+                1 => SubmitGenerate(_aceEditor2),
+            };
+            await codeTask;
+        }
+        private async Task Submit(AceEditor editor)
         {
             //if (string.IsNullOrWhiteSpace(codeText)) return;
             _isBusy = true;
             StateHasChanged();
             await Task.Delay(1);
-            var codeText = await _aceEditor!.GetValue();
+            var codeText = await editor!.GetValue();
             var promptBuilder = new StringBuilder();
             promptBuilder.AppendLine($"//{_selectedLanguage} code");
             promptBuilder.AppendLine(codeText);
@@ -97,6 +106,34 @@ namespace OpenAITinker.Pages
             _isBusy = false;
             StateHasChanged();
         }
+
+        public async Task SubmitGenerate(AceEditor editor)
+        {
+            _isBusy = true;
+            StateHasChanged();
+            await Task.Delay(1);
+
+            var codeText = await editor!.GetValue();
+            var request = new CompletionRequestModel
+            {
+                Prompt = $"{codeText.Replace("\r\n", "\n")}\n",
+                Model = _selectedModel,
+                Temperature = 0,
+                N = 1,
+                MaxTokens = 400,
+                BestOf = 1,
+                Stops = new List<string> {"/*" },
+                TopP = 1,
+                Echo = false,
+                PresencePenalty = 1.0f,
+            };
+            var response = await OpenAiDotNetService.CompletionService.Create(request);
+            var responseText = response.Choices.FirstOrDefault()?.Text ?? "Dick AI didn't provide a response!";
+            var editorText = $"{codeText}\n\n{responseText}";
+            await editor!.SetValue(editorText);
+            _isBusy = false;
+            StateHasChanged();
+        }
     }
 
     public static class Snippets
@@ -114,5 +151,8 @@ namespace OpenAITinker.Pages
 		cards[n] = value;
 	}
 }";
+
+        public const string RequestGenerate = @"/* C# Code Generate a generic method to shuffle cards. 
+It should take a type paramater T and collection of type T parameter named cards */";
     }
 }

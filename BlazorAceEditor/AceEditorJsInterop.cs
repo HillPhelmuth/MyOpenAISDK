@@ -2,6 +2,7 @@ using BlazorAceEditor.Models;
 using Microsoft.JSInterop;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using BlazorAceEditor.Helpers;
 
 namespace BlazorAceEditor
 {
@@ -12,14 +13,12 @@ namespace BlazorAceEditor
     // This class can be registered as scoped DI service and then injected into Blazor
     // components for use.
 
-    public class AceEditorJsInterop : IAsyncDisposable
+    public class AceEditorJsInterop : JSModule
     {
-        private readonly Lazy<Task<IJSObjectReference>> moduleTask;
 
-        public AceEditorJsInterop(IJSRuntime jsRuntime)
+        public AceEditorJsInterop(IJSRuntime jsRuntime) 
+            : base(jsRuntime, "./_content/BlazorAceEditor/aceEditorInterop.js")
         {
-            moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-                "import", "./_content/BlazorAceEditor/aceEditorInterop.js").AsTask());
         }
 
         public async ValueTask<bool> Init(string elementId, AceEditorOptions options)
@@ -31,43 +30,26 @@ namespace BlazorAceEditor
             });
             Console.WriteLine($"Options as Json:\n{optionsJson}");
             var optionsDict = JsonSerializer.Deserialize<JsonElement>(optionsJson);
-            var module = await moduleTask.Value;
-            return await module.InvokeAsync<bool>("init", elementId, optionsDict);
+            return await InvokeAsync<bool>("init", elementId, optionsDict);
         }
 
-        public async ValueTask<string> GetValue()
-        {
-            return await (await moduleTask.Value).InvokeAsync<string>("getValue");
-        }
+        public async ValueTask<string> GetValue() => await InvokeAsync<string>("getValue");
 
-        public async ValueTask SetValue(string value)
-        {
-            await (await moduleTask.Value).InvokeVoidAsync("setValue", value);
-        }
+        public async ValueTask SetValue(string value) => await InvokeVoidAsync("setValue", value);
+
         public async ValueTask SetLanguage(string language)
-        {
-            await (await moduleTask.Value).InvokeVoidAsync("setLanguage", language);
-        }
+        => await InvokeVoidAsync("setLanguage", language);
         public async ValueTask SetTheme(string theme)
-        {
-            await (await moduleTask.Value).InvokeVoidAsync("setTheme", theme);
-        }
+        => await InvokeVoidAsync("setTheme", theme);
 
         public async ValueTask<List<ThemeModel>> GetThemes(bool excludeDark = false)
         {
-            return await (await moduleTask.Value).InvokeAsync<List<ThemeModel>>("availableThemes");
+            return await InvokeAsync<List<ThemeModel>>("availableThemes");
         }
         //public async ValueTask Insert(string text)
         //{
 
         //}
-        public async ValueTask DisposeAsync()
-        {
-            if (moduleTask.IsValueCreated)
-            {
-                var module = await moduleTask.Value;
-                await module.DisposeAsync();
-            }
-        }
+        
     }
 }

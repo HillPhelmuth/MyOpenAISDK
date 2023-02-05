@@ -2,11 +2,10 @@
 
 <div class="page">
     <RadzenLayout Style="height:100vh; width:100vw">
-        <RadzenHeader>
+        <RadzenHeader Style="background-image: linear-gradient(to right,#073892 0%, rgb(58, 6, 71) 45%,#073892);">
             <RadzenSidebarToggle Click="@(() => _navMenuExpanded = !_navMenuExpanded)"></RadzenSidebarToggle>
-            <div class="text-center" style="position: absolute; top: 8px; margin-left: 40%; margin-right:40%">
-                <RadzenText Text="@PageHeader" TextStyle="TextStyle.H4" Style="color:white"></RadzenText>
-            </div>
+            <RadzenLabel Style="margin-left: 40%; margin-right: auto; margin-bottom: 6px; color:white" class="rz-text-h4" Text="@PageHeader" />
+            <a href="https://github.com/HillPhelmuth/MyOpenAISDK" target="_blank" style="position: absolute; right: 1.5rem; top: 6px;" class="ml-md-auto"><i style="width: 2.5rem; height: 2.5rem" class="githubIcon"></i></a>
         </RadzenHeader>
         <RadzenSidebar @bind-Expanded="_navMenuExpanded">
             <div class="sidebar"> <NavMenu /></div>
@@ -19,10 +18,12 @@
     </RadzenLayout>
     
 </div>
+<RadzenMediaQuery Query="(max-width: 641px)" Change="HandleSmallScreen"></RadzenMediaQuery>
 @code
 {
     [CascadingParameter(Name = "PageHeader")]
     public string PageHeader { get; set; }
 
     private bool _navMenuExpanded;
+    private void HandleSmallScreen(bool isSmall) => _navMenuExpanded = !isSmall;
 }

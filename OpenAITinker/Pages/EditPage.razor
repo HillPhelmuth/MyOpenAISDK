@@ -1,28 +1,43 @@
 ﻿@page "/edit"
-<h3 class="text-center">Edit Page</h3>
-<RadzenRow>
-    <RadzenTemplateForm Data="_editRequestForm" TItem="EditRequestForm" Submit="HandleSubmit">
-        <RadzenRow Style="width:75vw">
-            <RadzenColumn Size="6">
-                <div>
-                    <RadzenLabel Text="Input"></RadzenLabel>
-                    <RadzenTextArea @bind-Value="_editRequestForm.Input" Style="width: 100%; height: 10rem;"></RadzenTextArea>
-                </div>
-                <div>
-                    <RadzenLabel Text="Instruction"></RadzenLabel>
-                    <RadzenTextArea @bind-Value="_editRequestForm.Instruction" Style="width: 100%; height: 12rem;"></RadzenTextArea>
-                </div>
 
-            </RadzenColumn>
-            <RadzenColumn Size="3">
-                <RadzenButton ButtonType="ButtonType.Submit" IsBusy="_isBusy" Text="Request Edit" BusyText="Requsting Edits..."></RadzenButton>
-            </RadzenColumn>
-        </RadzenRow>
-    </RadzenTemplateForm>
-</RadzenRow>
 <RadzenRow>
+
+    <RadzenColumn Size="6">
+        <RadzenTemplateForm Data="_editRequestForm" TItem="EditRequestForm" Submit="HandleSubmit">
+            <div>
+                <RadzenText TextAlign="TextAlign.Left" TextStyle="TextStyle.Subtitle1" Text="Input"></RadzenText>
+                <RadzenTextArea @bind-Value="_editRequestForm.Input" Style="width: 100%; height: 8rem;" Placeholder="Text you want edited"></RadzenTextArea>
+            </div>
+            <div>
+                <RadzenText TextAlign="TextAlign.Left" TextStyle="TextStyle.Subtitle1" Text="Instruction"></RadzenText>
+                <RadzenTextArea @bind-Value="_editRequestForm.Instruction" Style="width: 100%; height: 10rem;" Placeholder="Enter instructions for editing (ex. 'Correct spelling')"></RadzenTextArea>
+            </div>
+            <div>
+                <RadzenButton ButtonType="ButtonType.Submit" IsBusy="_isBusy" Text="Request Edit" BusyText="Requsting Edits..."></RadzenButton>
+            </div>
+        </RadzenTemplateForm>
+    </RadzenColumn>
+    <RadzenColumn Size="6">
+        <div>
+            <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.DisplayH4" TagName="TagName.H4">Response Data</RadzenText>
+            @if (_editResponse != null)
+            {
+                @foreach (var choice in _editResponse.Choices)
+                {
+                    <RadzenCard>
+                        <div>Index: @choice.Index</div>
+                        <div>Text: @choice.Text</div>
+                        <div>Finish Reason: @choice.FinishReason</div>
+                    </RadzenCard>
+                }
+            }
+        </div>
+    </RadzenColumn>
+
+</RadzenRow>
+@*<RadzenRow>
     <div>
-        <h3 class="text-center">Response Data</h3>
+        <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.DisplayH4" TagName="TagName.H4">Response Data</RadzenText>
         @if (_editResponse != null)
         {
             @foreach (var choice in _editResponse.Choices)
@@ -35,7 +50,7 @@
             }
         }
     </div>
-</RadzenRow>
+</RadzenRow>*@
 @code {
 
 }

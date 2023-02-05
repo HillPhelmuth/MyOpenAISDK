@@ -1,7 +1,101 @@
 ﻿@page "/"
+@using OpenAITinker.Models
 
 <PageTitle>Home</PageTitle>
 
 <h1 class="text-center">OpenAI GPT-3 using OpenAIDotNet (c# SDK)</h1>
 
-<RadzenLink Target="_blank" Path="https://beta.openai.com/" Text="Learn more about OpenAI GPT-3 API"></RadzenLink>
+<div class="text-center"><RadzenLink Target="_blank" Path="https://platform.openai.com/overview" Text="Learn more about OpenAI GPT-3 API"></RadzenLink></div>
+
+<RadzenRow>
+    <RadzenColumn Size="2"></RadzenColumn>
+    <RadzenColumn Size="8">
+        <RadzenCard Style="width: 100%">
+            <RadzenPanel AllowCollapse="true" Collapsed="true">
+                <HeaderTemplate>
+                    <h4 class="m-0 d-flex align-items-center">
+                        <span class="oi oi-list-rich" style="margin-right:8px; margin-bottom: 2px;  font-size:1.25rem"></span><b>Images</b>
+                    </h4>
+                </HeaderTemplate>
+                <ChildContent>
+                    <RadzenCard>
+                        <p style="font-style: italic">Accoring to ChatGPT:</p><br/>
+                        @Helpers.ImageDescription
+                        <br/>
+                        <div style="font-size: 110%;" class="text-center rz-color-primary-dark">
+                            <RadzenLink Style="color: var(--rz-primary-dark)" Path="openImage" Text="Try it"></RadzenLink>
+                        </div>
+                        
+                    </RadzenCard>
+                </ChildContent>
+                <SummaryTemplate>
+                    OpenAI's GPT-3 API offers advanced image services with DALL·E for unique image generation.
+                </SummaryTemplate>
+            </RadzenPanel>
+            <RadzenPanel AllowCollapse="true" Collapsed="true">
+                <HeaderTemplate>
+                    <h4 class="m-0 d-flex align-items-center">
+                        <span class="oi oi-chat" style="margin-right:8px; margin-bottom: 2px; font-size:1.25rem"></span><b>Text Completions (chat)</b>
+                    </h4>
+                </HeaderTemplate>
+                <ChildContent>
+                    <RadzenCard>
+                        <p style="font-style: italic">Accoring to ChatGPT:</p><br/>
+                        @Helpers.CompletionsDescription
+                        <br/>
+                        <div style="font-size: 110%;" class="text-center rz-color-primary-dark">
+                            <RadzenLink Style="color: var(--rz-primary-dark)" Path="convo" Text="Try it"></RadzenLink>
+                        </div>
+                        
+                    </RadzenCard>
+                </ChildContent>
+                <SummaryTemplate>
+                    OpenAI's GPT-3 Completions API generates accurate and human-like text completions for a variety of applications.
+                </SummaryTemplate>
+            </RadzenPanel>
+            <RadzenPanel AllowCollapse="true" Collapsed="true">
+                <HeaderTemplate>
+                    <h4 class="m-0 d-flex align-items-center">
+                        <span class="oi oi-code" style="margin-right: 8px; margin-bottom: 4px;  font-size:1.25rem"></span><b>Code Models</b>
+                    </h4>
+                </HeaderTemplate>
+                <ChildContent>
+                    <RadzenCard>
+                        <p style="font-style: italic">Accoring to ChatGPT:</p><br />
+                        @Helpers.CodeDescription
+                        <br />
+                        <div style="font-size: 110%;" class="text-center rz-color-primary-dark">
+                            <RadzenLink Style="color: var(--rz-primary-dark)" Path="code" Text="Try it"></RadzenLink>
+                        </div>
+
+                    </RadzenCard>
+                </ChildContent>
+                <SummaryTemplate>
+                    The OpenAI GPT-3 API Codex Models Offer Powerful Solutions for Code Generation and Explanation.
+                </SummaryTemplate>
+            </RadzenPanel>
+            <RadzenPanel AllowCollapse="true" Collapsed="true">
+                <HeaderTemplate>
+                    <h4 class="m-0 d-flex align-items-center">
+                        <span class="oi oi-beaker" style="margin-right: 8px; margin-bottom: 4px; font-size:1.25rem"></span><b>Moderation</b>
+                    </h4>
+                </HeaderTemplate>
+                <ChildContent>
+                    <RadzenCard>
+                        <p style="font-style: italic">Accoring to ChatGPT:</p><br />
+                        @Helpers.ModerationDescription
+                        <br />
+                        <div style="font-size: 110%;" class="text-center rz-color-primary-dark">
+                            <RadzenLink Style="color: var(--rz-primary-dark)" Path="moderation" Text="Try it"></RadzenLink>
+                        </div>
+
+                    </RadzenCard>
+                </ChildContent>
+                <SummaryTemplate>
+                    OpenAI's GPT-3 API provides advanced moderation services for accurately classifying and filtering inappropriate text content.
+                </SummaryTemplate>
+            </RadzenPanel>
+        </RadzenCard>
+    </RadzenColumn>
+    <RadzenColumn Size="2"></RadzenColumn>
+</RadzenRow>
