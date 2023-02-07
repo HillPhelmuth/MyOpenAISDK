@@ -1,34 +1,54 @@
 ﻿@page "/code"
 @using BlazorAceEditor
 @using BlazorAceEditor.Models
-<h3>CodePage</h3>
-<h4>(Actual code editor next on To Do list)</h4>
-<hr />
-<RadzenRow Style="min-height: 25rem">
-    <RadzenColumn Style="height: 25rem;" Size="8">
-        <RadzenDropDown Data="_languageModes" TValue="string" TextProperty="Key" ValueProperty="Value" ValueChanged="HandleLanguageChange" Placeholder="Change Language" AllowFiltering="true"></RadzenDropDown>
-        <RadzenDropDown Data="_themes" TValue="ThemeModel" TextProperty="Caption" ValueChanged="HandleThemeChange" Placeholder="Change Theme" AllowFiltering="true"></RadzenDropDown>
-        <AceEditor @ref="@_aceEditor" Options="_aceEditorOptions" Style="height: 20rem; width: 100%" OnEditorInit="HandleInit"></AceEditor>
-    </RadzenColumn>
-    <RadzenColumn Size="4">
-        <RadzenLabel Text="Select Code Model"></RadzenLabel><br />
-        <RadzenDropDown Data="_modelOptions" TextProperty="Key" ValueProperty="Value" @bind-Value="_selectedModel"></RadzenDropDown><br />
-        <RadzenButton Click="Submit" Text="Request Explanation" IsBusy="_isBusy" BusyText="Requesting Explanation..."></RadzenButton>
-    </RadzenColumn>
-</RadzenRow>
-<RadzenRow>
-    @if (!string.IsNullOrEmpty(_responseText))
-    {
-        <RadzenCard Style="font-family: ui-monospace;
+
+<RadzenTabs @bind-SelectedIndex="_tabIndex">
+    <Tabs>
+        <RadzenTabsItem Text="Code Explanations">
+            <RadzenRow Style="min-height: 25rem">
+                <RadzenColumn Style="height: 25rem;" Size="8">
+                    <RadzenDropDown Data="_languageModes" TValue="string" TextProperty="Key" ValueProperty="Value" ValueChanged="@((e) => HandleLanguageChange(e, _aceEditor))" Placeholder="Change Language" AllowFiltering="true"></RadzenDropDown>
+                    <RadzenDropDown Data="_themes" TValue="ThemeModel" TextProperty="Caption" ValueChanged="@((e) => HandleThemeChange(e, _aceEditor))" Placeholder="Change Theme" AllowFiltering="true"></RadzenDropDown>
+                    <AceEditor @ref="@_aceEditor" Options="_aceEditorOptions" Style="height: 20rem; width: 100%" OnEditorInit="HandleInit"></AceEditor>
+                </RadzenColumn>
+                <RadzenColumn Size="4">
+                    <RadzenLabel Text="Select Code Model"></RadzenLabel><br />
+                    <RadzenDropDown Data="_modelOptions" TextProperty="Key" ValueProperty="Value" @bind-Value="_selectedModel"></RadzenDropDown><br />
+                    <RadzenButton Click="Submit" Text="Request Explanation" IsBusy="_isBusy" BusyText="Requesting Explanation..."></RadzenButton>
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow>
+                @if (!string.IsNullOrEmpty(_responseText))
+                {
+                    <RadzenCard Style="font-family: ui-monospace;
                            line-height: 1.2rem;
                            box-shadow: -2px 2px 5px 2px grey, -3px 3px 6px 3px green;
                            padding: .5rem; max-width: 50vw">
-            <ul>
-                @foreach (var item in _contentItems)
-                {
-                    <li>@item</li>
+                        <ul>
+                            @foreach (var item in _contentItems)
+                            {
+                                <li>@item</li>
+                            }
+                        </ul>
+                    </RadzenCard>
                 }
-            </ul>
-        </RadzenCard>
-    }
-</RadzenRow>
+            </RadzenRow>
+        </RadzenTabsItem>
+        <RadzenTabsItem Text="Code Generation">
+            <RadzenRow Style="min-height: 25rem">
+                <RadzenColumn Style="height: 25rem;" Size="8">
+                    <RadzenDropDown Data="_languageModes" TValue="string" TextProperty="Key" ValueProperty="Value" ValueChanged="@((e) => HandleLanguageChange(e, _aceEditor2))" Placeholder="Change Language" AllowFiltering="true"></RadzenDropDown>
+                    <RadzenDropDown Data="_themes" TValue="ThemeModel" TextProperty="Caption" ValueChanged="@((e) => HandleThemeChange(e, _aceEditor2))" Placeholder="Change Theme" AllowFiltering="true"></RadzenDropDown>
+                    <AceEditor @ref="@_aceEditor2" Options="_aceEditorOptions" Style="height: 20rem; width: 100%" OnEditorInit="HandleInit"></AceEditor>
+                </RadzenColumn>
+                <RadzenColumn Size="4">
+                    <RadzenLabel Text="Select Code Model"></RadzenLabel><br />
+                    <RadzenDropDown Data="_modelOptions" TextProperty="Key" ValueProperty="Value" @bind-Value="_selectedModel"></RadzenDropDown><br />
+                    <RadzenButton Click="Submit" Text="Request Code" IsBusy="_isBusy" BusyText="Requesting Explanation..."></RadzenButton>
+                </RadzenColumn>
+            </RadzenRow>
+        </RadzenTabsItem>
+
+    </Tabs>
+</RadzenTabs>
+

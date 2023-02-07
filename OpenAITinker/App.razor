@@ -20,11 +20,12 @@
     {
         pageHeader = context.Path switch
         {
-            "openImage" => "Image Models",
-            "convo" => "Text Models",
+            "openImage" => "Image Services",
+            "convo" => "Text Completions",
             "code" => "Code Models",
             "moderation" => "Moderation Models",
-            "edit" => "Text Edit Models",
+            "edit" => "Text Edit Model",
+            "embed" => "Embeddings",
             _ => "Home"
         };
     }

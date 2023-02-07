@@ -14,17 +14,14 @@ namespace OpenAIDotNet.Services
     {
         private readonly HttpClient _httpClient;
 
-        private readonly Endpoints _endPoints;
-
-        public ModerationService(HttpClient httpClient, Endpoints endPoints)
+        public ModerationService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _endPoints = endPoints;
         }
 
         public async Task<ModerationResponseModel> EvaluateContent(ModerationRequest request)
         {
-            var url = _endPoints.Moderation;
+            var url = Endpoints.Moderation;
             return await _httpClient.PostReadJsonAsync<ModerationResponseModel>(url, request);
         }
     }

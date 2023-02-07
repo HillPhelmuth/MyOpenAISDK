@@ -24,12 +24,10 @@ namespace OpenAIDotNet
             {
                 httpClient.DefaultRequestHeaders.Add("OpenAI-Organization", $"{organization}");
             }
-
-            var version = settings.Value.Version;
-            var endPoints = new Endpoints(version);
+            
             var defaultModel = settings.Value.DefaultModel;
 
-            InitializeServices(httpClient, endPoints, defaultModel);
+            InitializeServices(httpClient, defaultModel);
         }
 
         public OpenAIDotNetService(HttpClient httpClient, OpenAIGPTOptions settings)
@@ -43,18 +41,19 @@ namespace OpenAIDotNet
             {
                 httpClient.DefaultRequestHeaders.Add("OpenAI-Organization", $"{organization}");
             }
-
-            var endPoints = new Endpoints(settings.Version);
             var defaultModel = settings.DefaultModel;
 
-            InitializeServices(httpClient, endPoints, defaultModel);
+            InitializeServices(httpClient, defaultModel);
         }
-        private void InitializeServices(HttpClient httpClient, Endpoints endPoints, string? defaultModel)
+        private void InitializeServices(HttpClient httpClient, string? defaultModel)
         {
-            CompletionService = new CompletionService(httpClient, endPoints);
-            ImageService = new ImageService(httpClient, endPoints);
-            ModerationService = new ModerationService(httpClient, endPoints);
-            TextEditService = new TextEditService(httpClient, endPoints);
+            CompletionService = new CompletionService(httpClient);
+            ImageService = new ImageService(httpClient);
+            ModerationService = new ModerationService(httpClient);
+            TextEditService = new TextEditService(httpClient);
+            FineTuningService = new FineTuningService(httpClient);
+            EmbeddingService = new EmbeddingService(httpClient);
+            FileService = new FileService(httpClient);
             if (!string.IsNullOrEmpty(defaultModel))
             {
                 CompletionService.SetDefaultModel(defaultModel);
@@ -65,5 +64,8 @@ namespace OpenAIDotNet
         public ImageService ImageService { get; private set; } = default!;
         public ModerationService ModerationService { get; private set; } = default!;
         public TextEditService TextEditService { get; private set; } = default!;
+        public EmbeddingService EmbeddingService { get; private set; } = default!;
+        public FineTuningService FineTuningService { get; private set; } = default!;
+        public FileService FileService { get; private set; } = default!;
     }
 }

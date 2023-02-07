@@ -1,0 +1,59 @@
+﻿@page "/embed"
+<RadzenRow>
+    <RadzenColumn Size="6">
+        <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.DisplayH5" TagName="TagName.H5" Text="Input and Submit 2 or more"></RadzenText>
+        <RadzenTextArea Style="width:100%; height:18rem" @bind-Value="_input"></RadzenTextArea><br />
+        <RadzenButton Text="Request Embedding" BusyText="Requsting Embedding..." Click="Submit" IsBusy="_isBusy"></RadzenButton>
+    </RadzenColumn>
+    <RadzenColumn Size="6">
+        <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.DisplayH5" TagName="TagName.H5" Text="Use Embeddings to Show Similarity"></RadzenText>
+        <RadzenTabs SelectedIndexChanged="HandleTabChange">
+            <Tabs>
+                <RadzenTabsItem Text="Many to Many">
+                    @if (_storedEmbeddings.Any())
+                    {
+                        <RadzenCard Style="margin-left:auto; margin-right:auto">
+                            <RadzenText TextAlign="TextAlign.Left" TextStyle="TextStyle.Subtitle1" Text="Select 2 or more Embeddings"></RadzenText>
+                            <RadzenListBox Data="_storedEmbeddings" TValue="IEnumerable<StoredEmbedding>" TextProperty="Text"
+                                           Multiple="true" @bind-Value="_selectedEmbeddings"></RadzenListBox><br />
+                            <RadzenButton Click="GetSimilarities" Text="Generate Similarity Scores"></RadzenButton>
+                        </RadzenCard>
+                    }
+                </RadzenTabsItem>
+                <RadzenTabsItem Text="One to Many">
+                    @if (_storedEmbeddings.Any())
+                    {
+                        <RadzenCard Style="margin-left: auto; margin-right: auto">
+                            <RadzenText TextAlign="TextAlign.Left" TextStyle="TextStyle.Subtitle1" Text="Select 1 and then 2 or more Embeddings"></RadzenText>
+                            <RadzenDropDown Data="_storedEmbeddings" TextProperty="Text" TValue="StoredEmbedding" ValueChanged="HandleSelected"></RadzenDropDown>
+                            <hr/>
+                            @if (_selectedStoredEmbedding != null)
+                            {
+                                <RadzenListBox Data="_storedEmbeddings" TValue="IEnumerable<StoredEmbedding>" TextProperty="Text"
+                                               Multiple="true" @bind-Value="_selectedEmbeddings"></RadzenListBox>
+                                <br/>
+                                <RadzenButton Click="GetOneToManySimilarity" Text="Generate Similarity Scores"></RadzenButton>
+                            }
+                        </RadzenCard>
+                    }
+                </RadzenTabsItem>
+            </Tabs>
+        </RadzenTabs>
+        
+       
+    </RadzenColumn>
+</RadzenRow>
+<RadzenRow>
+    @if (_generatedSimilarityScores != null)
+    {
+        <RadzenText TextAlign="TextAlign.Center" TextStyle="TextStyle.DisplayH5" Text="Generated Similarity Scores"></RadzenText>
+        <RadzenDataGrid Data="_generatedSimilarityScores" Density="Density.Compact" AllowSorting="true">
+            <Columns>
+                <RadzenDataGridColumn TItem="SimilarityScore" Title="Text1" Property="Text1"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="SimilarityScore" Title="Text2" Property="Text2"></RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="SimilarityScore" Title="Similarity" Property="Cosine"></RadzenDataGridColumn>
+            </Columns>
+        </RadzenDataGrid>
+
+    }
+</RadzenRow>

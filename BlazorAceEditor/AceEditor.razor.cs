@@ -10,9 +10,9 @@ namespace BlazorAceEditor
 {
     public partial class AceEditor
     {
-        [Parameter] 
+        [Parameter]
         public string Id { get; set; } = default!;
-        [Parameter] 
+        [Parameter]
         public AceEditorOptions Options { get; set; } = default!;
         [Parameter]
         public string? Style { get; set; }
@@ -41,24 +41,12 @@ namespace BlazorAceEditor
             await base.OnAfterRenderAsync(firstRender);
         }
 
-        public async Task<string> GetValue()
-        {
-            return await AceEditorInterop.GetValue();
-        }
+        public async Task<string> GetValue() => await AceEditorInterop.GetValue();
 
-        public async Task SetValue(string text)
-        {
-            await AceEditorInterop.SetValue(text);
-        }
+        public async Task SetValue(string text) => await AceEditorInterop.SetValue(text);
 
-        public async Task ChangeLanguage(string language)
-        {
-            await AceEditorInterop.SetLanguage(language);
-        }
+        public async Task ChangeLanguage(string language) => await AceEditorInterop.SetLanguage(language);
 
-        public async Task ChangeTheme(string theme)
-        {
-            await AceEditorInterop.SetTheme(theme);
-        }
+        public async Task ChangeTheme(string theme) => await AceEditorInterop.SetTheme(theme);
     }
 }

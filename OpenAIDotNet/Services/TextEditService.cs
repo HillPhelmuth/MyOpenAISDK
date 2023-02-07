@@ -13,17 +13,15 @@ namespace OpenAIDotNet.Services
     public class TextEditService
     {
         private readonly HttpClient _httpClient;
-        private readonly Endpoints _endPoints;
 
-        public TextEditService(HttpClient httpClient, Endpoints endPoints)
+        public TextEditService(HttpClient httpClient)
         {
-            _endPoints = endPoints;
             _httpClient = httpClient;
         }
 
         public async Task<EditResponseModel> RequestEdit(EditRequestModel editRequestModel)
         {
-            var url = _endPoints.TextEdit;
+            var url = Endpoints.TextEdit;
             return await _httpClient.PostReadJsonAsync<EditResponseModel>(url, editRequestModel);
         }
     }

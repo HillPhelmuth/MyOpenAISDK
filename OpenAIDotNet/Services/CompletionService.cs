@@ -13,19 +13,17 @@ namespace OpenAIDotNet.Services
     public class CompletionService
     {
         private readonly HttpClient _httpClient;
-        private readonly Endpoints _endPoints;
         private string _defaultModel = GptModels.TextAdaV1;
 
-        public CompletionService(HttpClient httpClient, Endpoints endPoints)
+        public CompletionService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _endPoints = endPoints;
         }
 
         public async Task<CompletionResponseModel> Create(CompletionRequestModel request)
         {
             request.Model ??= _defaultModel;
-            var url = _endPoints.Completion;
+            var url = Endpoints.Completion;
             return await _httpClient.PostReadJsonAsync<CompletionResponseModel>(url, request);
         }
 
@@ -47,7 +45,7 @@ namespace OpenAIDotNet.Services
         {
             request.Model ??= _defaultModel;
             request.Stream ??= true;
-            var url = _endPoints.Completion;
+            var url = Endpoints.Completion;
             return _httpClient.PostReadJsonStream<CompletionResponseModel>(url, request);
         }
 

@@ -8,22 +8,20 @@ namespace OpenAIDotNet.Models
 {
     public class Endpoints
     {
-        private readonly string _apiVersion;
-
-        public Endpoints(string apiVersion)
-        {
-            _apiVersion = apiVersion;
-        }
         
-        public string Completion => $"/{_apiVersion}/completions";
-        public string ImageCreate => $"/{_apiVersion}/images/generations";
+        public static string Completion => "/v1/completions";
+        public static string ImageCreate => "/v1/images/generations";
 
-        public string ImageEditCreate => $"/{_apiVersion}/images/edits";
+        public static string ImageEditCreate => "/v1/images/edits";
 
-        public string ImageVariationCreate => $"/{_apiVersion}/images/variations";
+        public static string ImageVariationCreate => "/v1/images/variations";
 
-        public string Moderation => $"/{_apiVersion}/moderations";
+        public static string Moderation => "/v1/moderations";
 
-        public string TextEdit => $"/{_apiVersion}/edits";
+        public static string TextEdit => "/v1/edits";
+        public static string Embedding => "/v1/embeddings";
+        public static string FineTuneCreate => "/v1/fine-tunes";
+        public static string FileListOrUpload => "/v1/files";
+        public static string FileGetOrDelete(string fileId) => $"/v1/files/{fileId}";
     }
 }

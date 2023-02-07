@@ -14,24 +14,22 @@ namespace OpenAIDotNet.Services
     public class ImageService
     {
         private readonly HttpClient _httpClient;
-        
-        private readonly Endpoints _endPoints;
-        public ImageService(HttpClient httpClient, Endpoints endPoints)
+
+        public ImageService(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            _endPoints = endPoints;
         }
 
         public async Task<ImageResponseModel> Create(ImageCreateRequest request)
         {
-            var url = _endPoints.ImageCreate;
+            var url = Endpoints.ImageCreate;
 
             return await _httpClient.PostReadJsonAsync<ImageResponseModel>(url, request);
         }
 
         public async Task<ImageResponseModel> Edit(ImageEditRequest imageEditCreateRequest)
         {
-            var url = _endPoints.ImageEditCreate;
+            var url = Endpoints.ImageEditCreate;
             var multipartContent = new MultipartFormDataContent();
             if (imageEditCreateRequest.User != null) multipartContent.Add(new StringContent(imageEditCreateRequest.User), "user");
             if (imageEditCreateRequest.ResponseFormat != null) multipartContent.Add(new StringContent(imageEditCreateRequest.ResponseFormat), "response_format");
@@ -46,7 +44,7 @@ namespace OpenAIDotNet.Services
         public async Task<ImageResponseModel> CreateVariation(ImageEditRequest imageEditCreateRequest)
         {
             //_httpClient.DefaultRequestHeaders.Add("content-type", "multipart/form-data");
-            var url = _endPoints.ImageVariationCreate;
+            var url = Endpoints.ImageVariationCreate;
             var multipartContent = new MultipartFormDataContent();
             if (imageEditCreateRequest.User != null) multipartContent.Add(new StringContent(imageEditCreateRequest.User), "user");
             if (imageEditCreateRequest.ResponseFormat != null) multipartContent.Add(new StringContent(imageEditCreateRequest.ResponseFormat), "response_format");

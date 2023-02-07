@@ -24,7 +24,12 @@ namespace OpenAIDotNet.Models.Requests
             {
                 if (Prompt != null && PromptList != null)
                 {
-                    throw new ValidationException("Prompt and PromptList can not both me used! Pick one!");
+                    throw new ValidationException("Prompt and PromptList can not both be used! Pick one!");
+                }
+
+                if (Prompt == null && PromptList == null)
+                {
+                    throw new ValidationException("You need some kind of prompt. Add a value to either Prompt or PromptList");
                 }
                 return Prompt != null ? new List<string>() { Prompt } : PromptList;
             }
@@ -32,50 +37,36 @@ namespace OpenAIDotNet.Models.Requests
 
         [JsonPropertyName("suffix")]
         public string? Suffix { get; set; }
-
        
         [JsonPropertyName("max_tokens")]
         public int? MaxTokens { get; set; }
-
         
         [JsonPropertyName("top_p")]
         public float? TopP { get; set; }
-
        
         [JsonPropertyName("n")]
         public int? N { get; set; }
-
        
         [JsonPropertyName("stream")]
         public bool? Stream { get; set; }
-
         
         [JsonPropertyName("echo")]
         public bool? Echo { get; set; }
-        
-       
 
         [JsonPropertyName("stop")]
         public IList<string>? Stops { get; set; }
-        
-
        
         [JsonPropertyName("presence_penalty")]
         public float? PresencePenalty { get; set; }
-
-
         
         [JsonPropertyName("frequency_penalty")]
         public float? FrequencyPenalty { get; set; }
-
        
         [JsonPropertyName("best_of")]
         public int? BestOf { get; set; }
-
       
         [JsonPropertyName("logit_bias")]
         public object? LogitBias { get; set; }
-
        
         [JsonPropertyName("logprobs")]
         public int? LogProbs { get; set; }
