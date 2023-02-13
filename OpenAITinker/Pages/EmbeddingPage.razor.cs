@@ -13,25 +13,49 @@ namespace OpenAITinker.Pages
         [Inject]
         private OpenAIDotNetService OpenAiDotNetService { get; set; } = default!;
         private string? _input;
+        private readonly List<InputItem> _inputs = new(){new InputItem {Id = 0, Value = ""}};
         private bool _isBusy;
         private readonly List<StoredEmbedding> _storedEmbeddings = new();
         private StoredEmbedding? _selectedStoredEmbedding;
         private IEnumerable<StoredEmbedding>? _selectedEmbeddings;
         private IEnumerable<SimilarityScore>? _generatedSimilarityScores;
+
+        private class InputItem
+        {
+            public int Id { get; set; }
+            public string Value { get; set; } = "";
+        }
         private async Task Submit()
         {
-            if (string.IsNullOrWhiteSpace(_input)) return;
+            if (_inputs.Count <= 1) return;
             _isBusy = true;
             StateHasChanged();
             await Task.Delay(1);
-            var responseModel = await OpenAiDotNetService.EmbeddingService.Create(new EmbeddingCreateRequest { Input = _input.Replace("\n", " ") });
-            _storedEmbeddings.Add(new StoredEmbedding(_input, responseModel.Data.FirstOrDefault().Embedding));
+            _storedEmbeddings.Clear();
+            foreach (var input in _inputs)
+            {
+                var responseModel = await OpenAiDotNetService.EmbeddingService.Create(new EmbeddingCreateRequest { Input = input.Value.Replace("\r\n", " ").Replace("\n", " ") });
+                _storedEmbeddings.Add(new StoredEmbedding(input.Value, responseModel.Data.FirstOrDefault().Embedding));
+            }
+            
             _isBusy = false;
             _input = null;
             StateHasChanged();
 
         }
 
+        private void AddInput()
+        {
+             var index = _inputs.Count;
+            _inputs.Add(new InputItem {Id = index});
+        }
+
+        private void RemoveInput(int index)
+        {
+            var input = _inputs.Find(x => x.Id == index);
+            if (input == null || input.Id == 0) return;
+            _inputs.Remove(input);
+        }
         private void HandleSelected(StoredEmbedding stored)
         {
             _selectedStoredEmbedding = stored;

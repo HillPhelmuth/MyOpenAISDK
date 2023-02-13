@@ -7,9 +7,9 @@
         <RadzenTabsItem Text="Code Explanations">
             <RadzenRow Style="min-height: 25rem">
                 <RadzenColumn Style="height: 25rem;" Size="8">
-                    <RadzenDropDown Data="_languageModes" TValue="string" TextProperty="Key" ValueProperty="Value" ValueChanged="@((e) => HandleLanguageChange(e, _aceEditor))" Placeholder="Change Language" AllowFiltering="true"></RadzenDropDown>
+                    <RadzenDropDown Data="_languages" TValue="string" TextProperty="DisplayName" ValueProperty="Mode" ValueChanged="@((e) => HandleLanguageChange(e, _aceEditor))" Placeholder="Change Language" AllowFiltering="true"></RadzenDropDown>
                     <RadzenDropDown Data="_themes" TValue="ThemeModel" TextProperty="Caption" ValueChanged="@((e) => HandleThemeChange(e, _aceEditor))" Placeholder="Change Theme" AllowFiltering="true"></RadzenDropDown>
-                    <AceEditor @ref="@_aceEditor" Options="_aceEditorOptions" Style="height: 20rem; width: 100%" OnEditorInit="HandleInit"></AceEditor>
+                    <AceEditor @ref="@_aceEditor" Options="_aceEditorOptions" Style="height: 20rem; width: 100%" OnEditorInit="HandleInit" OnEditorChange="HandleChange"></AceEditor>
                 </RadzenColumn>
                 <RadzenColumn Size="4">
                     <RadzenLabel Text="Select Code Model"></RadzenLabel><br />
@@ -37,9 +37,9 @@
         <RadzenTabsItem Text="Code Generation">
             <RadzenRow Style="min-height: 25rem">
                 <RadzenColumn Style="height: 25rem;" Size="8">
-                    <RadzenDropDown Data="_languageModes" TValue="string" TextProperty="Key" ValueProperty="Value" ValueChanged="@((e) => HandleLanguageChange(e, _aceEditor2))" Placeholder="Change Language" AllowFiltering="true"></RadzenDropDown>
+                    <RadzenDropDown Data="_languages" TValue="string" TextProperty="DisplayName" ValueProperty="Mode" ValueChanged="@((e) => HandleLanguageChange(e, _aceEditor2))" Placeholder="Change Language" AllowFiltering="true"></RadzenDropDown>
                     <RadzenDropDown Data="_themes" TValue="ThemeModel" TextProperty="Caption" ValueChanged="@((e) => HandleThemeChange(e, _aceEditor2))" Placeholder="Change Theme" AllowFiltering="true"></RadzenDropDown>
-                    <AceEditor @ref="@_aceEditor2" Options="_aceEditorOptions" Style="height: 20rem; width: 100%" OnEditorInit="HandleInit"></AceEditor>
+                    <AceEditor @ref="@_aceEditor2" Options="_aceEditorOptions" Style="height: 20rem; width: 100%" OnEditorInit="HandleInit" OnEditorChange="HandleChange"></AceEditor>
                 </RadzenColumn>
                 <RadzenColumn Size="4">
                     <RadzenLabel Text="Select Code Model"></RadzenLabel><br />

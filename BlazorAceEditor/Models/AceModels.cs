@@ -24,4 +24,14 @@ namespace BlazorAceEditor.Models
         [JsonPropertyName("Name")]
         public string? Name { get; set; }
     }
+
+    public record ModeModel
+    {
+        [JsonPropertyName("Name")]
+        public string? DisplayName { get; set; }
+        [JsonPropertyName("SupportedFileTypes")]
+        public string? SupportedFileTypes { get; set; }
+        [JsonPropertyName("Mode")]
+        public string? Mode { get; set; }
+    }
 }

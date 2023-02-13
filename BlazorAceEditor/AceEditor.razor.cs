@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BlazorAceEditor.Models;
+using BlazorAceEditor.Models.Events;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorAceEditor
 {
-    public partial class AceEditor
+    public partial class AceEditor : IAsyncDisposable
     {
         [Parameter]
         public string Id { get; set; } = default!;
@@ -18,6 +19,8 @@ namespace BlazorAceEditor
         public string? Style { get; set; }
         [Parameter]
         public EventCallback<AceEditor> OnEditorInit { get; set; }
+        [Parameter]
+        public EventCallback<AceChangeEventArgs> OnEditorChange { get; set; }
 
         [Inject] private AceEditorJsInterop AceEditorInterop { get; set; } = default!;
 
@@ -36,7 +39,10 @@ namespace BlazorAceEditor
             {
                 var didInit = await AceEditorInterop.Init(Id, Options);
                 if (didInit)
+                {
                     await OnEditorInit.InvokeAsync(this);
+                    AceEditorInterop.AceEditorChange += HandleEditorChange;
+                }
             }
             await base.OnAfterRenderAsync(firstRender);
         }
@@ -48,5 +54,18 @@ namespace BlazorAceEditor
         public async Task ChangeLanguage(string language) => await AceEditorInterop.SetLanguage(language);
 
         public async Task ChangeTheme(string theme) => await AceEditorInterop.SetTheme(theme);
+
+        protected async void HandleEditorChange(object? sender, AceChangeEventArgs args)
+        {
+            await OnEditorChange.InvokeAsync(args);
+        }
+
+        public ValueTask DisposeAsync()
+        {
+            AceEditorInterop.AceEditorChange -= HandleEditorChange;
+            //await AceEditorInterop.DisposeAsync();
+            GC.SuppressFinalize(this);
+            return ValueTask.CompletedTask;
+        }
     }
 }

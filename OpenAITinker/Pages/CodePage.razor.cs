@@ -1,7 +1,9 @@
 ﻿using System.Text;
 using BlazorAceEditor;
 using BlazorAceEditor.Models;
+using BlazorAceEditor.Models.Events;
 using Microsoft.AspNetCore.Components;
+using Newtonsoft.Json;
 using OpenAIDotNet;
 using OpenAIDotNet.Models.Requests;
 
@@ -33,6 +35,7 @@ namespace OpenAITinker.Pages
 
         private Dictionary<string, string> _languageModes = new();
         private List<ThemeModel> _themes = new();
+        private List<ModeModel> _languages = new();
         private string _selectedLanguage = "c#";
 
         private int _tabIndex;
@@ -48,6 +51,8 @@ namespace OpenAITinker.Pages
             
             _languageModes = new Dictionary<string, string>() {{"C++","c_cpp"},{"C#","csharp"}, {"Java","java"} };
             _themes = await AceEditorJsInterop.GetThemes();
+            _languages = await AceEditorJsInterop.GetLanguageModes() ?? new List<ModeModel>();
+            Console.WriteLine($"Languages found: {_languages.Count}\n{string.Join("\n", _languages.Select(x => x.DisplayName))}");
             StateHasChanged();
         }
 
@@ -58,25 +63,28 @@ namespace OpenAITinker.Pages
 
         private async Task HandleThemeChange(ThemeModel theme, AceEditor editor)
         {
-            await editor!.ChangeTheme(theme.Name);
+            await editor.ChangeTheme(theme.Name!);
         }
 
+        private void HandleChange(AceChangeEventArgs args)
+        {
+            Console.WriteLine(JsonConvert.SerializeObject(args, Formatting.Indented));
+        }
         private async Task Submit()
         {
             var codeTask = _tabIndex switch
             {
-                0 => Submit(_aceEditor),
-                1 => SubmitGenerate(_aceEditor2),
+                0 => SubmitExplain(_aceEditor!),
+                1 => SubmitGenerate(_aceEditor2!),
             };
             await codeTask;
         }
-        private async Task Submit(AceEditor editor)
+        private async Task SubmitExplain(AceEditor editor)
         {
-            //if (string.IsNullOrWhiteSpace(codeText)) return;
             _isBusy = true;
             StateHasChanged();
             await Task.Delay(1);
-            var codeText = await editor!.GetValue();
+            var codeText = await editor.GetValue();
             var promptBuilder = new StringBuilder();
             promptBuilder.AppendLine($"//{_selectedLanguage} code");
             promptBuilder.AppendLine(codeText);
@@ -98,7 +106,7 @@ namespace OpenAITinker.Pages
                 Echo = false,
                 PresencePenalty = 0,
             });
-            var responseText = response.Choices.FirstOrDefault()?.Text ?? "Dick AI didn't provide a response!";
+            var responseText = response.Choices?.FirstOrDefault()?.Text ?? "Dick AI didn't provide a response!";
             
             _responseText = responseText;
             var items = _responseText.Split("//");
@@ -113,7 +121,7 @@ namespace OpenAITinker.Pages
             StateHasChanged();
             await Task.Delay(1);
 
-            var codeText = await editor!.GetValue();
+            var codeText = await editor.GetValue();
             var request = new CompletionRequestModel
             {
                 Prompt = $"{codeText.Replace("\r\n", "\n")}\n",
@@ -130,7 +138,7 @@ namespace OpenAITinker.Pages
             var response = await OpenAiDotNetService.CompletionService.Create(request);
             var responseText = response.Choices.FirstOrDefault()?.Text ?? "Dick AI didn't provide a response!";
             var editorText = $"{codeText}\n\n{responseText}";
-            await editor!.SetValue(editorText);
+            await editor.SetValue(editorText);
             _isBusy = false;
             StateHasChanged();
         }

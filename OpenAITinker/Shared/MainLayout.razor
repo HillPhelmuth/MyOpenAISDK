@@ -22,7 +22,7 @@
 @code
 {
     [CascadingParameter(Name = "PageHeader")]
-    public string PageHeader { get; set; }
+    public string PageHeader { get; set; } = default!;
 
     private bool _navMenuExpanded;
     private void HandleSmallScreen(bool isSmall) => _navMenuExpanded = !isSmall;

@@ -3,19 +3,13 @@ using Microsoft.JSInterop;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using BlazorAceEditor.Helpers;
+using BlazorAceEditor.Models.Events;
 
 namespace BlazorAceEditor
 {
-    // This class provides an example of how JavaScript functionality can be wrapped
-    // in a .NET class for easy consumption. The associated JavaScript module is
-    // loaded on demand when first needed.
-    //
-    // This class can be registered as scoped DI service and then injected into Blazor
-    // components for use.
-
     public class AceEditorJsInterop : JSModule
     {
-
+        public event AceChangeEventHandler? AceEditorChange;
         public AceEditorJsInterop(IJSRuntime jsRuntime) 
             : base(jsRuntime, "./_content/BlazorAceEditor/aceEditorInterop.js")
         {
@@ -30,7 +24,8 @@ namespace BlazorAceEditor
             });
             Console.WriteLine($"Options as Json:\n{optionsJson}");
             var optionsDict = JsonSerializer.Deserialize<JsonElement>(optionsJson);
-            return await InvokeAsync<bool>("init", elementId, optionsDict);
+            var dotNetReference = DotNetObjectReference.Create(this);
+            return await InvokeAsync<bool>("init", elementId, optionsDict, dotNetReference);
         }
 
         public async ValueTask<string> GetValue() => await InvokeAsync<string>("getValue");
@@ -46,10 +41,20 @@ namespace BlazorAceEditor
         {
             return await InvokeAsync<List<ThemeModel>>("availableThemes");
         }
+
+        public async ValueTask<List<ModeModel>> GetLanguageModes()
+        {
+            var modes = await InvokeAsync<List<ModeModel>>("availableLanguageModes");
+            return modes;
+        }
         //public async ValueTask Insert(string text)
         //{
 
         //}
-        
+        [JSInvokable]
+        public void HandleAceChange(AceChangeEventArgs args)
+        {
+            AceEditorChange?.Invoke(this, args);
+        }
     }
 }
