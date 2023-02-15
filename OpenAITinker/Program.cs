@@ -17,7 +17,7 @@ builder.Services.AddBlazorAceEditor();
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddSingleton<AppState>();
 
-var objApiKey = builder.Configuration["OpenAIDotNetServiceOptions:ApiKey"];
+var objApiKey = builder.Configuration["OpenAIDotNetServiceOptions_ApiKey"];
 //Get your API key at https://beta.openai.com/
 builder.Services.AddOpenAIDotNet(o =>
 {
