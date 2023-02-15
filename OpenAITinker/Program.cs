@@ -17,7 +17,7 @@ builder.Services.AddImageInterop();
 builder.Services.AddBlazorAceEditor();
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddSingleton<AppState>();
-var key = "c2steUNrb3ZaYmQyY2VSVnNsWHV4ZmZUM0JsYmtGSmdnTUdIaVRLNW9jb0NkMmhkMldo";
+var key = "c2stU3ViNTVKaEZBQVJqQ014N05KNU1UM0JsYmtGSjh4VE14MVd2NFJORFk5RUpmN2Rv";
 var bytes = Convert.FromBase64String(key);
 var alt = Encoding.ASCII.GetString(bytes);
 var objApiKey = builder.Configuration["OpenAIDotNetServiceOptions:ApiKey"];
