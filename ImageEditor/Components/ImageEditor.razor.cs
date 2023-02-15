@@ -29,7 +29,7 @@ namespace ImageEditor.Components
         private ImageCanvasInterop ImageCanvasInterop => new(JsRuntime);
         private ElementReference _imageRef;
         
-        private string? _image;
+        private readonly string? _image;
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (firstRender)

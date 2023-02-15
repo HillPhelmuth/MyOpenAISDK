@@ -29,8 +29,7 @@ namespace OpenAITinker.Models
         {
 
             var assembly = Assembly.GetExecutingAssembly();
-            var resourcePath = name;
-            resourcePath = assembly.GetManifestResourceNames()
+            var resourcePath = assembly.GetManifestResourceNames()
                 .Single(str => str.EndsWith(name));
             using var stream = assembly.GetManifestResourceStream(resourcePath);
             using var reader = new StreamReader(stream);

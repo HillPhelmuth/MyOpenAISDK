@@ -1,4 +1,5 @@
-﻿<CascadingValue TValue="string" Value="pageHeader" Name="PageHeader">
+﻿@using OpenAITinker.Services
+<CascadingValue TValue="string" Value="pageHeader" Name="PageHeader">
     <Router AppAssembly="@typeof(App).Assembly" OnNavigateAsync="HandleNav">
         <Found Context="routeData">
             <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
@@ -15,9 +16,14 @@
 </CascadingValue>
 @code
 {
+    [Inject]
+    private AppState AppState { get; set; }
+    [Inject]
+    private NavigationManager NavManager { get; set; }
     private string pageHeader = "Home";
     private void HandleNav(NavigationContext context)
     {
+        
         pageHeader = context.Path switch
         {
             "openImage" => "Image Services",
@@ -28,5 +34,19 @@
             "embed" => "Embeddings",
             _ => "Home"
         };
+        if (pageHeader == "Home" || AppState.HasSecret) return;
+        Console.WriteLine($"Secret: {AppState.AppSecret}. Has it? {AppState.HasSecret}");
+        NavManager.NavigateTo("/");
+    }
+
+    protected override Task OnInitializedAsync()
+    {
+        AppState.PropertyChanged += (sender, args) =>
+        {
+            Console.WriteLine($"App component registered Prop change: {args.PropertyName}");
+            if (args.PropertyName == nameof(AppState.HasSecret))
+                StateHasChanged();
+        };
+        return base.OnInitializedAsync();
     }
 }

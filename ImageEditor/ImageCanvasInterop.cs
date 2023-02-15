@@ -1,5 +1,5 @@
 using System.Text;
-using ImageEditor.Services;
+using ImageEditor.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
@@ -60,9 +60,6 @@ namespace ImageEditor
     
     public static class ServiceCollectionExt
     {
-        public static IServiceCollection AddImageInterop(this IServiceCollection services)
-        {
-            return services.AddSingleton<ImageCanvasInterop>().AddScoped<ImageService>();
-        }
+        
     }
 }

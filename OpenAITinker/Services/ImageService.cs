@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Reflection;
-using ImageEditor.Models;
 using Newtonsoft.Json;
 using OpenAIDotNet;
 using OpenAIDotNet.Models.Requests;
@@ -11,7 +9,7 @@ using ImageSize = OpenAIDotNet.Models.Requests.ImageSize;
 
 //using TinkerWithGpt3.Shared.Models;
 
-namespace ImageEditor.Services
+namespace OpenAITinker.Services
 {
     public class ImageService
     {
@@ -157,7 +155,4 @@ namespace ImageEditor.Services
         }
 
     }
-    
-
-    public record DrawnRectangle(double X, double Y, double Width, double Height);
 }

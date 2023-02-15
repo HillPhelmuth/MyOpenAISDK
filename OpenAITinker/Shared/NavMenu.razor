@@ -1,4 +1,6 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using OpenAITinker.Services
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">OpenAIDotNet Demo</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -8,50 +10,72 @@
 </div>
 
 <div class="nav-scrollable" @onclick="ToggleNavMenu">
-    <nav class="flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="openImage">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Images
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="convo">
-                <span class="oi oi-chat" aria-hidden="true"></span> Text Completion
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="code">
-                <span class="oi oi-code" aria-hidden="true"></span> Code Models
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="moderation">
-                <span class="oi oi-beaker" aria-hidden="true"></span> Moderation
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="edit">
-                <span class="oi oi-envelope-open" aria-hidden="true"></span> Text Editing
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="embed">
-                <span class="oi oi-calculator" aria-hidden="true"></span> Embeddings
-            </NavLink>
-        </div>
-    </nav>
+    @if (!AppState.HasSecret)
+    {
+        <RadzenLabel Style="color: white" Text="Enter the secret code"></RadzenLabel><br/>
+        <RadzenTextBox @bind-Value="_secret"></RadzenTextBox><br />
+        <RadzenButton Click="Submit" Text="Submit"></RadzenButton>
+    }
+    else
+    {
+        <nav class="flex-column">
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                    <span class="oi oi-home" aria-hidden="true"></span> Home
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="openImage">
+                    <span class="oi oi-list-rich" aria-hidden="true"></span> Images
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="convo">
+                    <span class="oi oi-chat" aria-hidden="true"></span> Text Completion
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="code">
+                    <span class="oi oi-code" aria-hidden="true"></span> Code Models
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="moderation">
+                    <span class="oi oi-beaker" aria-hidden="true"></span> Moderation
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="edit">
+                    <span class="oi oi-envelope-open" aria-hidden="true"></span> Text Editing
+                </NavLink>
+            </div>
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="embed">
+                    <span class="oi oi-calculator" aria-hidden="true"></span> Embeddings
+                </NavLink>
+            </div>
+        </nav>
+    }
 </div>
 
 @code {
     private bool collapseNavMenu = true;
 
+    [Inject]
+    private AppState AppState { get; set; } = default!;
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    private string _secret = "";
 
+    private void Submit()
+    {
+        AppState.AppSecret = _secret;
+        if (AppState.AppSecret == "Taxformers!")
+        {
+            AppState.HasSecret = true;
+            StateHasChanged();
+        }
+        
+    }
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
