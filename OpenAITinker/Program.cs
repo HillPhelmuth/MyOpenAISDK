@@ -17,11 +17,12 @@ builder.Services.AddImageInterop();
 builder.Services.AddBlazorAceEditor();
 builder.Services.AddScoped<ImageService>();
 builder.Services.AddSingleton<AppState>();
-var key = "c2stU3ViNTVKaEZBQVJqQ014N05KNU1UM0JsYmtGSjh4VE14MVd2NFJORFk5RUpmN2Rv";
-var bytes = Convert.FromBase64String(key);
-var alt = Encoding.ASCII.GetString(bytes);
+
 var objApiKey = builder.Configuration["OpenAIDotNetServiceOptions:ApiKey"];
+var alt = builder.Configuration["OpenAIDotNetServiceOptions_ApiKey"];
+var alt2 = builder.Configuration["ApiKey"];
 objApiKey = string.IsNullOrEmpty(objApiKey) ? alt : objApiKey;
+objApiKey = string.IsNullOrEmpty(objApiKey) ? alt2 : objApiKey;
 //Get your API key at https://beta.openai.com/
 builder.Services.AddOpenAIDotNet(o =>
 {
