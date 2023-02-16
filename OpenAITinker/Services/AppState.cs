@@ -6,7 +6,7 @@ namespace OpenAITinker.Services
     public class AppState : INotifyPropertyChanged
     {
         private string? _appSecret;
-        private bool _hasSecret;
+        private bool _hasSecret = true;
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public string? AppSecret
