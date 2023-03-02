@@ -5,11 +5,11 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAIDotNet", "OpenAIDotNet\OpenAIDotNet.csproj", "{AE684807-4CED-4A1B-B240-0EE6BACC7920}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OpenAITinker", "OpenAITinker\OpenAITinker.csproj", "{520ADABD-3887-4C2A-BA53-A0656DF9E432}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ImageEditor", "ImageEditor\ImageEditor.csproj", "{CB4B45FA-911E-46D5-A9B9-231EC5E82004}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorAceEditor", "BlazorAceEditor\BlazorAceEditor.csproj", "{E97679FB-F43E-411B-9FFF-E1D88E8AE1D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OpenAIDotNetDemo", "OpenAIDotNetDemo\OpenAIDotNetDemo.csproj", "{388BF266-7753-4E43-91DF-A80F40613CB8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +21,6 @@ Global
 		{AE684807-4CED-4A1B-B240-0EE6BACC7920}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE684807-4CED-4A1B-B240-0EE6BACC7920}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE684807-4CED-4A1B-B240-0EE6BACC7920}.Release|Any CPU.Build.0 = Release|Any CPU
-		{520ADABD-3887-4C2A-BA53-A0656DF9E432}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{520ADABD-3887-4C2A-BA53-A0656DF9E432}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{520ADABD-3887-4C2A-BA53-A0656DF9E432}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{520ADABD-3887-4C2A-BA53-A0656DF9E432}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CB4B45FA-911E-46D5-A9B9-231EC5E82004}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CB4B45FA-911E-46D5-A9B9-231EC5E82004}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB4B45FA-911E-46D5-A9B9-231EC5E82004}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{E97679FB-F43E-411B-9FFF-E1D88E8AE1D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E97679FB-F43E-411B-9FFF-E1D88E8AE1D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E97679FB-F43E-411B-9FFF-E1D88E8AE1D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{388BF266-7753-4E43-91DF-A80F40613CB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{388BF266-7753-4E43-91DF-A80F40613CB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{388BF266-7753-4E43-91DF-A80F40613CB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{388BF266-7753-4E43-91DF-A80F40613CB8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

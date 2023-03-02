@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OpenAIDotNet.Models.Responses
 {
-    public class EmbeddingResponseModel : BaseResult
+    public class EmbeddingResponseModel : BaseResponse
     {
 
         [JsonPropertyName("data")]

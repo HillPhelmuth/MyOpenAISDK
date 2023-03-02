@@ -54,6 +54,7 @@ namespace OpenAIDotNet
             FineTuningService = new FineTuningService(httpClient);
             EmbeddingService = new EmbeddingService(httpClient);
             FileService = new FileService(httpClient);
+            ChatService = new ChatService(httpClient);
             if (!string.IsNullOrEmpty(defaultModel))
             {
                 CompletionService.SetDefaultModel(defaultModel);
@@ -67,5 +68,6 @@ namespace OpenAIDotNet
         public EmbeddingService EmbeddingService { get; private set; } = default!;
         public FineTuningService FineTuningService { get; private set; } = default!;
         public FileService FileService { get; private set; } = default!;
+        public ChatService ChatService { get; private set; } = default!;
     }
 }

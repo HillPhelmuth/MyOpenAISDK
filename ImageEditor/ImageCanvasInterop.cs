@@ -62,7 +62,7 @@ namespace ImageEditor
     {
         public static IServiceCollection AddImageInterop(this IServiceCollection services)
         {
-            return services.AddSingleton<ImageCanvasInterop>().AddScoped<ImageService>();
+            return services.AddScoped<ImageCanvasInterop>().AddScoped<ImageService>();
         }
     }
 }

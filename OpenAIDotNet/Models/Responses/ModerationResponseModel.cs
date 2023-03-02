@@ -8,7 +8,7 @@ using OpenAIDotNet.Extensions;
 
 namespace OpenAIDotNet.Models.Responses
 {
-    public class ModerationResponseModel : BaseResult
+    public class ModerationResponseModel : BaseResponse
     {
         [JsonPropertyName("results")] public List<Result>? Results { get; set; }
 

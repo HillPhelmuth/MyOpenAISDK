@@ -9,18 +9,18 @@ using OpenAIDotNet.Extensions;
 
 namespace OpenAIDotNet.Models.Responses
 {
-    public class FineTuneListResponseModel : BaseResult
+    public class FineTuneListResponseModel : BaseResponse
     {
         [JsonPropertyName("data")]
         public List<FineTuneListResponseModel>? FineTuneResponseList { get; set; }
     }
 
-    public class FineTuneEventListReponseModel : BaseResult
+    public class FineTuneEventListReponseModel : BaseResponse
     {
         [JsonPropertyName("data")]
         public List<FineTuneEvent>? EventList { get; set; }
     }
-    public class FineTuneResponseModel : BaseResult
+    public class FineTuneResponseModel : BaseResponse
     {
         [JsonPropertyName("id")]
         public string? Id { get; set; }
@@ -89,7 +89,7 @@ namespace OpenAIDotNet.Models.Responses
         public double PromptLossWeight { get; set; }
     }
 
-    public class File : BaseResult
+    public class File : BaseResponse
     {
         private string? _purpose;
 

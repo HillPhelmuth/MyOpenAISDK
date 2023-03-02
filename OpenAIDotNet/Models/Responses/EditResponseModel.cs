@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OpenAIDotNet.Models.Responses
 {
-    public class EditResponseModel : BaseResult
+    public class EditResponseModel : BaseResponse
     {
         [JsonPropertyName("model")] public string? Model { get; set; }
 

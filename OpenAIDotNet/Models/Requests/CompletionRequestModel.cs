@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace OpenAIDotNet.Models.Requests
 {
-    public class CompletionRequestModel
+    public class CompletionRequestModel : ChatRequestBase
     {
        
         [JsonIgnore]
@@ -38,51 +38,20 @@ namespace OpenAIDotNet.Models.Requests
         [JsonPropertyName("suffix")]
         public string? Suffix { get; set; }
        
-        [JsonPropertyName("max_tokens")]
-        public int? MaxTokens { get; set; }
-        
-        [JsonPropertyName("top_p")]
-        public float? TopP { get; set; }
-       
-        [JsonPropertyName("n")]
-        public int? N { get; set; }
-       
-        [JsonPropertyName("stream")]
-        public bool? Stream { get; set; }
-        
         [JsonPropertyName("echo")]
         public bool? Echo { get; set; }
 
-        [JsonPropertyName("stop")]
-        public IList<string>? Stops { get; set; }
-       
-        [JsonPropertyName("presence_penalty")]
-        public float? PresencePenalty { get; set; }
-        
-        [JsonPropertyName("frequency_penalty")]
-        public float? FrequencyPenalty { get; set; }
-       
         [JsonPropertyName("best_of")]
         public int? BestOf { get; set; }
       
-        [JsonPropertyName("logit_bias")]
-        public object? LogitBias { get; set; }
-       
         [JsonPropertyName("logprobs")]
         public int? LogProbs { get; set; }
-
-        [JsonPropertyName("model")] public string? Model { get; set; }
+        [JsonPropertyName("model")]
+        public string? Model { get; set; }
 
         public IEnumerable<ValidationResult> Validate()
         {
             throw new NotImplementedException();
         }
-
-        
-        [JsonPropertyName("temperature")]
-        public float? Temperature { get; set; }
-
-        [JsonPropertyName("user")]
-        public string? User { get; set; }
     }
 }

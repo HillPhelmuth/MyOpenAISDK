@@ -10,6 +10,7 @@ namespace OpenAIDotNet.Models
     {
         
         public static string Completion => "/v1/completions";
+        public static string Chat => "/v1/chat/completions";
         public static string ImageCreate => "/v1/images/generations";
 
         public static string ImageEditCreate => "/v1/images/edits";

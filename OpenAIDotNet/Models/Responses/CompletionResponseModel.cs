@@ -2,7 +2,7 @@
 
 namespace OpenAIDotNet.Models.Responses
 {
-    public class CompletionResponseModel : BaseResult
+    public class CompletionResponseModel : BaseResponse
     {
         [JsonPropertyName("model")] public string? Model { get; set; }
 

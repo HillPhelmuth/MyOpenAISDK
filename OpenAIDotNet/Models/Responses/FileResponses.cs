@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace OpenAIDotNet.Models.Responses
 {
-    public class FileListData : BaseResult
+    public class FileListData : BaseResponse
     {
         [JsonPropertyName("data")]  
         public List<File>? FileData { get; set; }
     }
-    public class FileDeleteResponse : BaseResult
+    public class FileDeleteResponse : BaseResponse
     {
         [JsonPropertyName("deleted")] public bool Deleted { get; set; }
         [JsonPropertyName("id")] public string Id { get; set; }

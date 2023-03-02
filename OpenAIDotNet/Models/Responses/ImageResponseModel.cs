@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace OpenAIDotNet.Models.Responses
 {
-    public class ImageResponseModel : BaseResult
+    public class ImageResponseModel : BaseResponse
     {
         [JsonPropertyName("data")] public List<ImageData> Results { get; set; }
 

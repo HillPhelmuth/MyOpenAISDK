@@ -1,0 +1,164 @@
+﻿@page "/"
+@using OpenAIDotNetDemo.Models
+
+<PageTitle>Home</PageTitle>
+
+<h2 style="margin-top:-3px" class="text-center">OpenAI GPT-3 using OpenAIDotNet (c# SDK)</h2>
+
+<div class="text-center"><RadzenLink Target="_blank" Path="https://platform.openai.com/overview" Text="Learn more about OpenAI GPT-3 API"></RadzenLink></div>
+
+<RadzenRow>
+    <RadzenColumn SizeLG="2" SizeXS="0"></RadzenColumn>
+    <RadzenColumn SizeLG="8" SizeXS="12">
+        <RadzenCard Style="width: 100%">
+            <RadzenPanel AllowCollapse="true" Collapsed="true">
+                <HeaderTemplate>
+                    <h4 class="m-0 d-flex align-items-center">
+                        <span class="oi oi-list-rich"></span><b> - Images</b>
+                    </h4>
+                </HeaderTemplate>
+                <ChildContent>
+                    <RadzenCard Style="font-family: math;">
+                        <p style="font-style: italic">Accoring to ChatGPT:</p><br/>
+                        @Helpers.GetContent("Images").Description
+                        <br/>
+                        <div style="font-size: 125%;" class="rz-color-primary-dark">
+                            <RadzenLink Style="color: var(--rz-primary-darker)" Path="openImage" Text="Try it!"></RadzenLink>
+                        </div>
+                        
+                    </RadzenCard>
+                </ChildContent>
+                <SummaryTemplate>
+                    @Helpers.GetContent("Images").Short
+                </SummaryTemplate>
+            </RadzenPanel>
+            <RadzenPanel AllowCollapse="true" Collapsed="true">
+                <HeaderTemplate>
+                    <h4 class="m-0 d-flex align-items-center">
+                        <span class="oi oi-text" ></span><b> - Text Completions</b>
+                    </h4>
+                </HeaderTemplate>
+                <ChildContent>
+                    <RadzenCard Style="font-family: math;">
+                        <p style="font-style: italic">Accoring to ChatGPT:</p><br/>
+                        @Helpers.GetContent("Completions").Description
+                        <br/>
+                        <div style="font-size: 125%;" class="rz-color-primary-dark">
+                            <RadzenLink Style="color: var(--rz-primary-darker)" Path="convo" Text="Try it!"></RadzenLink>
+                        </div>
+                        
+                    </RadzenCard>
+                </ChildContent>
+                <SummaryTemplate>
+                    @Helpers.GetContent("Completions").Short
+                </SummaryTemplate>
+            </RadzenPanel>
+            <RadzenPanel AllowCollapse="true" Collapsed="true">
+                <HeaderTemplate>
+                    <h4 class="m-0 d-flex align-items-center">
+                        <span class="oi oi-code" ></span><b> - Code Models</b>
+                    </h4>
+                </HeaderTemplate>
+                <ChildContent>
+                    <RadzenCard Style="font-family: math;">
+                        <p style="font-style: italic">Accoring to ChatGPT:</p><br />
+                        @Helpers.GetContent("Code").Description
+                        <br />
+                        <div style="font-size: 125%;" class="rz-color-primary-dark">
+                            <RadzenLink Style="color: var(--rz-primary-darker)" Path="code" Text="Try it!"></RadzenLink>
+                        </div>
+
+                    </RadzenCard>
+                </ChildContent>
+                <SummaryTemplate>
+                    @Helpers.GetContent("Code").Short
+                </SummaryTemplate>
+            </RadzenPanel>
+            <RadzenPanel AllowCollapse="true" Collapsed="true">
+                <HeaderTemplate>
+                    <h4 class="m-0 d-flex align-items-center">
+                        <span class="oi oi-beaker" ></span><b> - Moderation</b>
+                    </h4>
+                </HeaderTemplate>
+                <ChildContent>
+                    <RadzenCard Style="font-family: math;">
+                        <p style="font-style: italic">Accoring to ChatGPT:</p><br />
+                        @Helpers.GetContent("Moderation").Description
+                        <br />
+                        <div style="font-size: 125%;" class="rz-color-primary-dark">
+                            <RadzenLink Style="color: var(--rz-primary-darker)" Path="moderation" Text="Try it!"></RadzenLink>
+                        </div>
+
+                    </RadzenCard>
+                </ChildContent>
+                <SummaryTemplate>
+                    @Helpers.GetContent("Moderation").Short
+                </SummaryTemplate>
+            </RadzenPanel>
+            <RadzenPanel AllowCollapse="true" Collapsed="true">
+                <HeaderTemplate>
+                    <h4 class="m-0 d-flex align-items-center">
+                        <span class="oi oi-envelope-open"></span><b> - Text Editing</b>
+                    </h4>
+                </HeaderTemplate>
+                <ChildContent>
+                    <RadzenCard Style="font-family: math;">
+                        <p style="font-style: italic">Accoring to ChatGPT:</p><br />
+                        @Helpers.GetContent("Edits").Description
+                        <br />
+                        <div style="font-size: 125%;" class="rz-color-primary-dark">
+                            <RadzenLink Style="color: var(--rz-primary-darker)" Path="edit" Text="Try it!"></RadzenLink>
+                        </div>
+
+                    </RadzenCard>
+                </ChildContent>
+                <SummaryTemplate>
+                    @Helpers.GetContent("Edits").Short
+                </SummaryTemplate>
+            </RadzenPanel>
+            <RadzenPanel AllowCollapse="true" Collapsed="true">
+                <HeaderTemplate>
+                    <h4 class="m-0 d-flex align-items-center">
+                        <span class="oi oi-calculator"></span><b> - Embeddings</b>
+                    </h4>
+                </HeaderTemplate>
+                <ChildContent>
+                    <RadzenCard Style="font-family: math;">
+                        <p style="font-style: italic">Accoring to ChatGPT:</p><br />
+                        @Helpers.GetContent("Embeddings").Description
+                        <br />
+                        <div style="font-size: 125%;" class="rz-color-primary-dark">
+                            <RadzenLink Style="color: var(--rz-primary-darker)" Path="embed" Text="Try it!"></RadzenLink>
+                        </div>
+
+                    </RadzenCard>
+                </ChildContent>
+                <SummaryTemplate>
+                    @Helpers.GetContent("Embeddings").Short
+                </SummaryTemplate>
+            </RadzenPanel>
+            <RadzenPanel AllowCollapse="true" Collapsed="true">
+                <HeaderTemplate>
+                    <h4 class="m-0 d-flex align-items-center">
+                        <span class="oi oi-chat" ></span><b> - Chat</b>
+                    </h4>
+                </HeaderTemplate>
+                <ChildContent>
+                    <RadzenCard Style="font-family: math;">
+                        <p style="font-style: italic">Accoring to ChatGPT:</p><br/>
+                        @Helpers.GetContent("ChatGPT").Description
+                        <br/>
+                        <div style="font-size: 125%;" class="rz-color-primary-dark">
+                            <RadzenLink Style="color: var(--rz-primary-darker)" Path="chat" Text="Try it!"></RadzenLink>
+                        </div>
+                        
+                    </RadzenCard>
+                </ChildContent>
+                <SummaryTemplate>
+                    @Helpers.GetContent("ChatGPT").Short
+                </SummaryTemplate>
+            </RadzenPanel>
+        </RadzenCard>
+    </RadzenColumn>
+    <RadzenColumn SizeLG="2" SizeXS="0"></RadzenColumn>
+</RadzenRow>
