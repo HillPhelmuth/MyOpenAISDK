@@ -11,7 +11,7 @@ namespace OpenAIDotNetDemo.Pages
         private class ChatForm
         {
             public string? Input { get; set; }
-            public bool AllowFollowUp { get; set; }
+            public bool RequestStream { get; set; }
         }
         private ChatForm _chatForm = new();
         private string? _personality;
@@ -30,6 +30,11 @@ namespace OpenAIDotNetDemo.Pages
 
         private async void Submit(ChatForm chatForm)
         {
+            if (chatForm.RequestStream)
+            {
+                SubmitAsStream(chatForm);
+                return;
+            }
             _isBusy = true;
             StateHasChanged();
             await Task.Delay(1);
@@ -37,7 +42,7 @@ namespace OpenAIDotNetDemo.Pages
             Messages.Add(message);
             var request = new ChatRequestModel()
             {
-                MaxTokens = 256,
+                MaxTokens = 1000,
                 Temperature = 0.9f,
                 Messages = Messages
             };
@@ -49,6 +54,42 @@ namespace OpenAIDotNetDemo.Pages
             StateHasChanged();
         }
 
+        private async void SubmitAsStream(ChatForm chatForm)
+        {
+            var message = new Message { Role = "user", Content = chatForm.Input };
+            Messages.Add(message);
+            _isBusy = true;
+            StateHasChanged();
+            await Task.Delay(1);
+           
+            var request = new ChatRequestModel()
+            {
+                MaxTokens = 1000,
+                Temperature = 0.9f,
+                Messages = Messages,
+                Stream = true
+            };
+            var response = OpenAiDotNetService.ChatService.CreateChatStream(request);
+            var contentStart = false;
+            await foreach (var delta in response)
+            {
+                var newContent = delta.Choices?.FirstOrDefault()?.Delta?.Content;
+                if (newContent == null) continue;
+                if (!contentStart)
+                {
+                    Messages.Add(new Message() {Role = "assistant", Content = newContent});
+                    contentStart = true;
+                    StateHasChanged();
+                    await Task.Delay(1);
+                }
+                else
+                {
+                    Messages.LastOrDefault()!.Content += newContent;
+                    StateHasChanged();
+                    await Task.Delay(1);
+                }
+            }
+        }
         private void ChangePersona(string persona)
         {
             _personality = persona;

@@ -6,6 +6,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 
 namespace OpenAIDotNet.Extensions
 {
@@ -41,9 +42,20 @@ namespace OpenAIDotNet.Extensions
                     line = line[$"data: ".Length..];
 
                 if (string.IsNullOrWhiteSpace(line) || line == "[DONE]") continue;
-                var t = JsonSerializer.Deserialize<TResponse>(line.Trim());
+                var t = JsonSerializer.Deserialize<TResponse>(line.Trim().TrimStart('\'').TrimEnd('\''));
                 yield return t;
             }
+        }
+        public static async Task<HttpResponseMessage> PostAsStream(this HttpClient httpClient, string requestUri, object request)
+        {
+            var jsonSerializerOptions = new JsonSerializerOptions { DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault };
+            var jsonContent = JsonContent.Create(request, null, jsonSerializerOptions);
+
+            using var httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, requestUri);
+            httpRequestMessage.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("text/event-stream"));
+            httpRequestMessage.Content = jsonContent;
+
+            return await httpClient.SendAsync(httpRequestMessage, HttpCompletionOption.ResponseHeadersRead);
         }
     }
 }

@@ -8,20 +8,8 @@ using OpenAIDotNet.Models.Shared;
 
 namespace OpenAIDotNet.Models.Responses
 {
-    public class ChatResponseModel : BaseResponse
+    public class ChatResponseModel : ChatResponseModelBase
     {
-        [JsonPropertyName("id")]
-        public string? Id { get; set; }
-
-        [JsonPropertyName("created")]
-        public int Created { get; set; }
-
-        [JsonPropertyName("model")]
-        public string? Model { get; set; }
-
-        [JsonPropertyName("usage")]
-        public TokenUsage? Usage { get; set; }
-
         [JsonPropertyName("choices")]
         public List<ChatChoice>? Choices { get; set; }
     }

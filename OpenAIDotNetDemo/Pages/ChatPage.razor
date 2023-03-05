@@ -1,4 +1,5 @@
 ﻿@page "/chat"
+@using Microsoft.AspNetCore.Mvc.ViewFeatures
 <RadzenRow>
     <RadzenColumn Size="2"></RadzenColumn>
     <RadzenColumn Size="8">
@@ -17,9 +18,9 @@
             <div id="chatlist" class="chatlist">
                 @foreach (var item in Messages.Where(x => x.Role != "system"))
                 {
-                    <RadzenCard class="@($"chatlog {item.Role}")">
-                        @item.Content
-                    </RadzenCard>
+                    @*<RadzenCard class="@($"chatlog {item.Role}")">*@
+                        <RadzenTextArea class="@($"chatlog {item.Role}")" Style="width:100%; height: 6rem;" @bind-Value="@item.Content"></RadzenTextArea>
+                   @* </RadzenCard>*@
                 }
             </div>
             @if (_isBusy)
@@ -29,7 +30,7 @@
             <RadzenTemplateForm Data="_chatForm" TItem=ChatForm Submit="Submit">
                 <RadzenRequiredValidator Component="Input" Text="Chat input required" Popup=false Style="position: inherit"></RadzenRequiredValidator>
                 <RadzenTextBox Name="Input" @bind-Value=_chatForm.Input Placeholder="Type here to talk to me." Style="font: 17px arial, sans-serif; height: 28px; width: 100%;"></RadzenTextBox>
-                <RadzenButton ButtonType="ButtonType.Submit" Text="Send"></RadzenButton>
+                <RadzenButton ButtonType="ButtonType.Submit" Text="Send"></RadzenButton> <RadzenCheckBox @bind-Value="_chatForm.RequestStream"></RadzenCheckBox>Response as stream
             </RadzenTemplateForm>
         </RadzenCard>
     </RadzenColumn>

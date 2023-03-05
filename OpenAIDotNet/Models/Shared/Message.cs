@@ -10,3 +10,21 @@ public class Message
     [JsonPropertyName("content")]
     public string? Content { get; set; }
 }
+
+public class Delta
+{
+    [JsonPropertyName("role"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Role { get; set; }
+
+    [JsonPropertyName("content"), JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
+    public string? Content { get; set; }
+
+    public Message ToMessage()
+    {
+        return new Message
+        {
+            Role = string.IsNullOrEmpty(Role) ? "assistant" : Role,
+            Content = string.IsNullOrEmpty(Content) ? "" : Content
+        };
+    }
+}
